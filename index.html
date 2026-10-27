@@ -1,0 +1,1480 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111416">
+  <meta name="description" content="Conheça imóveis em Americana, Santa Bárbara d’Oeste e Nova Odessa com a Ewerton Imóveis. CRECI 177849-F.">
+  <title>Ewerton Imóveis | Americana e região</title>
+
+  <!--
+    PRÉVIA DEMONSTRATIVA — imagens locais fáceis de substituir:
+    1. ./assets/hero.png — imagem aérea de fundo do Hero
+    2. ./assets/img/imoveis/imovel-1/ — fotos do apartamento com sacada gourmet
+    3. ./assets/img/imoveis/imovel-2/ — fotos do apartamento com sacada e elevador
+    4. ./assets/img/imoveis/imovel-3/ — fotos da casa com três dormitórios
+  -->
+
+  <!-- Tipografia: Playfair Display para títulos e Inter para interface e textos. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Tokens, base e acessibilidade */
+    :root {
+      color-scheme: dark;
+      --color-graphite: #111416;
+      --color-graphite-soft: #171b1d;
+      --color-graphite-light: #1d2224;
+      --color-champagne: #B8955B;
+      --color-champagne-light: #d3b77f;
+      --color-ice: #F5F3EE;
+      --color-gray: #A7A9AC;
+      --color-line: rgba(245, 243, 238, .13);
+      --font-heading: "Playfair Display", Georgia, serif;
+      --font-body: "Inter", Arial, sans-serif;
+      --content-width: 1160px;
+      --header-height: 82px;
+      --transition: 240ms ease;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-height) + 18px);
+    }
+
+    body {
+      margin: 0;
+      background: var(--color-graphite);
+      color: var(--color-ice);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body,
+    button,
+    a {
+      font-family: var(--font-body);
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--color-champagne-light);
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(var(--content-width), calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .section {
+      padding-block: 104px;
+    }
+
+    .section--alternate {
+      background: var(--color-graphite-soft);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 16px;
+      color: var(--color-champagne-light);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 28px;
+      height: 1px;
+      background: var(--color-champagne);
+      content: "";
+    }
+
+    .section-heading {
+      max-width: 680px;
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 500;
+      letter-spacing: -.035em;
+      line-height: 1.14;
+    }
+
+    .section-intro {
+      max-width: 620px;
+      margin: 18px 0 0;
+      color: var(--color-gray);
+      font-size: .98rem;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 22px;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .015em;
+      line-height: 1.35;
+      text-align: center;
+      transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button--gold {
+      background: var(--color-champagne);
+      color: #141414;
+    }
+
+    .button--gold:hover {
+      background: var(--color-champagne-light);
+    }
+
+    .button--outline {
+      border-color: rgba(245, 243, 238, .68);
+      background: rgba(17, 20, 22, .16);
+      color: var(--color-ice);
+    }
+
+    .button--outline:hover {
+      border-color: var(--color-champagne-light);
+      background: rgba(184, 149, 91, .12);
+    }
+
+    .button svg {
+      width: 17px;
+      height: 17px;
+      flex: 0 0 auto;
+    }
+
+    /* Cabeçalho fixo e navegação responsiva */
+    .site-header {
+      position: fixed;
+      z-index: 20;
+      inset: 0 0 auto;
+      height: var(--header-height);
+      border-bottom: 1px solid transparent;
+      background: linear-gradient(180deg, rgba(12, 15, 16, .78), transparent);
+      transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .site-header.is-scrolled {
+      border-color: var(--color-line);
+      background: rgba(17, 20, 22, .96);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .18);
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      display: flex;
+      width: min(1320px, calc(100% - 48px));
+      height: 100%;
+      align-items: center;
+      justify-content: space-between;
+      margin-inline: auto;
+    }
+
+    .brand {
+      display: inline-flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-size: 1.18rem;
+      font-weight: 600;
+      letter-spacing: .01em;
+    }
+
+    .brand-credential {
+      margin-top: 4px;
+      color: var(--color-gray);
+      font-size: .63rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .header-nav {
+      position: absolute;
+      top: var(--header-height);
+      right: 0;
+      left: 0;
+      display: none;
+      padding: 10px 24px 24px;
+      border-bottom: 1px solid var(--color-line);
+      background: var(--color-graphite);
+    }
+
+    .header-nav.is-open {
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 12px 0;
+      color: var(--color-ice);
+      font-size: .84rem;
+      transition: color var(--transition);
+    }
+
+    .nav-link:hover {
+      color: var(--color-champagne-light);
+    }
+
+    .header-cta {
+      display: inline-flex;
+      min-height: 42px;
+      padding: 9px 11px;
+      font-size: .68rem;
+    }
+
+    .menu-toggle {
+      display: inline-grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid var(--color-line);
+      border-radius: 3px;
+      background: rgba(17, 20, 22, .3);
+      cursor: pointer;
+    }
+
+    .menu-toggle svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    /* Hero: imagem de fundo com camadas de contraste e tom quente */
+    .hero {
+      position: relative;
+      display: flex;
+      min-height: min(800px, 100svh);
+      min-height: max(680px, 100svh);
+      align-items: center;
+      overflow: hidden;
+      background: #38362f;
+      isolation: isolate;
+    }
+
+    .hero-image,
+    .hero-overlay {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-image {
+      object-fit: cover;
+      object-position: center;
+      filter: sepia(.17) saturate(.8) brightness(.78);
+    }
+
+    .hero-overlay {
+      background:
+        linear-gradient(90deg, rgba(13, 16, 17, .91) 0%, rgba(13, 16, 17, .72) 48%, rgba(13, 16, 17, .2) 100%),
+        linear-gradient(0deg, rgba(13, 16, 17, .72) 0%, transparent 57%),
+        linear-gradient(135deg, rgba(184, 149, 91, .14), transparent 44%);
+    }
+
+    .hero-content {
+      width: min(var(--content-width), calc(100% - 48px));
+      margin: 66px auto 0;
+      padding-block: 80px 110px;
+    }
+
+    .hero .eyebrow {
+      margin-bottom: 22px;
+    }
+
+    .hero-title {
+      max-width: 760px;
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 8vw, 6.35rem);
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: 1.02;
+    }
+
+    .hero-subtitle {
+      margin: 25px 0 0;
+      color: var(--color-ice);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 500;
+    }
+
+    .hero-description {
+      max-width: 510px;
+      margin: 12px 0 0;
+      color: rgba(245, 243, 238, .78);
+      font-size: .94rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      right: max(24px, calc((100% - var(--content-width)) / 2));
+      bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(245, 243, 238, .72);
+      font-size: .64rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .scroll-cue::after {
+      width: 46px;
+      height: 1px;
+      background: var(--color-champagne);
+      content: "";
+    }
+
+    /* Imóveis demonstrativos */
+    .notice {
+      margin: 30px 0 30px;
+      padding: 14px 18px;
+      border-left: 2px solid var(--color-champagne);
+      background: rgba(245, 243, 238, .045);
+      color: #c4c5c6;
+      font-size: .78rem;
+      line-height: 1.6;
+    }
+
+    .property-carousel {
+      min-width: 0;
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+
+    .carousel-button {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgba(184, 149, 91, .55);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--color-champagne-light);
+      cursor: pointer;
+      transition: background-color var(--transition), color var(--transition), opacity var(--transition);
+    }
+
+    .carousel-button:hover:not(:disabled) {
+      background: var(--color-champagne);
+      color: var(--color-graphite);
+    }
+
+    .carousel-button:disabled {
+      cursor: default;
+      opacity: .38;
+    }
+
+    .carousel-button svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .property-grid {
+      display: flex;
+      gap: 22px;
+      min-width: 0;
+      overflow-x: auto;
+      padding: 2px 2px 18px;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+    }
+
+    .property-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .property-card {
+      display: flex;
+      flex: 0 0 100%;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid rgba(245, 243, 238, .1);
+      border-radius: 4px;
+      background: #191d1f;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, .13);
+      scroll-snap-align: start;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    .property-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(184, 149, 91, .45);
+      box-shadow: 0 22px 44px rgba(0, 0, 0, .22);
+    }
+
+    .property-image-wrap {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #34352f, #212729 58%, #514636);
+    }
+
+    .property-image-wrap--interior {
+      background: linear-gradient(135deg, #3c3932, #24292a 56%, #4d493e);
+    }
+
+    .property-image-wrap--house {
+      background: linear-gradient(135deg, #45443d, #242a2c 60%, #60513d);
+    }
+
+    .property-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 500ms ease;
+    }
+
+    .property-card:hover .property-image {
+      transform: scale(1.035);
+    }
+
+    .city-tag {
+      position: absolute;
+      bottom: 15px;
+      left: 16px;
+      padding: 7px 10px;
+      border: 1px solid rgba(245, 243, 238, .35);
+      border-radius: 2px;
+      background: rgba(17, 20, 22, .72);
+      color: var(--color-ice);
+      font-size: .64rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    .property-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 22px 21px 23px;
+    }
+
+    .property-title {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .property-price {
+      margin: 8px 0 16px;
+      color: var(--color-champagne-light);
+      font-size: 1.12rem;
+      font-weight: 600;
+    }
+
+    .property-features {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 22px;
+      padding: 0;
+      color: #c3c4c4;
+      font-size: .76rem;
+      line-height: 1.55;
+      list-style: none;
+    }
+
+    .property-features li {
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .property-features li::before {
+      position: absolute;
+      top: .65em;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-champagne);
+      content: "";
+    }
+
+    .property-button {
+      width: 100%;
+      min-height: 46px;
+      padding: 11px 16px;
+      border-color: rgba(184, 149, 91, .6);
+      background: transparent;
+      color: var(--color-champagne-light);
+      font-size: .76rem;
+    }
+
+    .property-button:hover {
+      background: rgba(184, 149, 91, .1);
+    }
+
+    .property-actions {
+      display: grid;
+      gap: 9px;
+      margin-top: auto;
+      padding-top: 20px;
+    }
+
+    .property-actions .button {
+      width: 100%;
+      min-height: 44px;
+    }
+
+    .details-button {
+      border-color: rgba(245, 243, 238, .24);
+      background: rgba(245, 243, 238, .035);
+      color: var(--color-ice);
+      font-size: .76rem;
+    }
+
+    .details-button:hover {
+      border-color: var(--color-champagne);
+      background: rgba(184, 149, 91, .1);
+      color: var(--color-champagne-light);
+    }
+
+    .whatsapp-icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+    }
+
+    /* Diferenciais com ícones SVG inline */
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 38px;
+      margin-top: 52px;
+    }
+
+    .advantage {
+      padding-top: 25px;
+      border-top: 1px solid var(--color-line);
+    }
+
+    .advantage-icon {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      margin-bottom: 20px;
+      border: 1px solid rgba(184, 149, 91, .35);
+      border-radius: 50%;
+      color: var(--color-champagne-light);
+    }
+
+    .advantage-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .advantage h3 {
+      margin: 0 0 10px;
+      font-family: var(--font-heading);
+      font-size: 1.27rem;
+      font-weight: 500;
+    }
+
+    .advantage p {
+      max-width: 330px;
+      margin: 0;
+      color: var(--color-gray);
+      font-size: .88rem;
+    }
+
+    /* Sobre: apresentação tipográfica sem imagem de pessoa */
+    .about-grid {
+      display: block;
+    }
+
+    .about-copy {
+      max-width: 780px;
+      color: #c7c8c8;
+      font-size: .98rem;
+      line-height: 1.9;
+    }
+
+    .about-copy p {
+      margin: 22px 0 0;
+    }
+
+    .about-tagline {
+      color: var(--color-ice);
+      font-weight: 500;
+    }
+
+    .creci-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 26px;
+      padding: 10px 14px;
+      border: 1px solid rgba(184, 149, 91, .35);
+      color: var(--color-champagne-light);
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+    }
+
+    /* Contato */
+    .contact-panel {
+      display: grid;
+      gap: 38px;
+      padding: 30px 24px;
+      border: 1px solid rgba(184, 149, 91, .23);
+      background:
+        radial-gradient(ellipse at 0% 100%, rgba(184, 149, 91, .1), transparent 48%),
+        var(--color-graphite-light);
+    }
+
+    .contact-details {
+      display: grid;
+      gap: 0;
+      margin-top: 27px;
+      border-top: 1px solid var(--color-line);
+    }
+
+    .contact-link,
+    .contact-static {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 62px;
+      border-bottom: 1px solid var(--color-line);
+      color: var(--color-ice);
+      font-size: .86rem;
+      transition: color var(--transition);
+    }
+
+    .contact-link:hover {
+      color: var(--color-champagne-light);
+    }
+
+    .contact-link svg,
+    .contact-static svg {
+      width: 19px;
+      height: 19px;
+      flex: 0 0 auto;
+      color: var(--color-champagne-light);
+    }
+
+    .contact-action {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-action p {
+      max-width: 330px;
+      margin: 0;
+      color: var(--color-gray);
+      font-size: .88rem;
+    }
+
+    .contact-action .button {
+      width: 100%;
+      min-height: 58px;
+      font-size: .92rem;
+    }
+
+    /* Rodapé */
+    .site-footer {
+      padding-block: 45px 24px;
+      border-top: 1px solid var(--color-line);
+      background: #0e1112;
+    }
+
+    .footer-main {
+      display: grid;
+      gap: 28px;
+      padding-bottom: 28px;
+    }
+
+    .footer-name {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: 1.45rem;
+      font-weight: 500;
+    }
+
+    .footer-role,
+    .footer-meta {
+      margin: 7px 0 0;
+      color: var(--color-gray);
+      font-size: .76rem;
+      line-height: 1.7;
+    }
+
+    a.footer-role {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-champagne-light);
+      transition: color var(--transition);
+    }
+
+    a.footer-role:hover {
+      color: var(--color-ice);
+    }
+
+    .footer-meta strong {
+      color: var(--color-ice);
+      font-weight: 500;
+    }
+
+    .footer-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 18px;
+      border-top: 1px solid var(--color-line);
+      color: var(--color-gray);
+      font-size: .68rem;
+    }
+
+    .footer-disclaimer {
+      max-width: 690px;
+      margin: 0;
+    }
+
+    .copyright {
+      margin: 0;
+    }
+
+    /* Atalho flutuante, exibido após o Hero */
+    .floating-whatsapp {
+      position: fixed;
+      z-index: 15;
+      right: 20px;
+      bottom: 20px;
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      border: 1px solid rgba(245, 243, 238, .18);
+      border-radius: 50%;
+      background: var(--color-champagne);
+      color: #141414;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity var(--transition), transform var(--transition), background-color var(--transition);
+    }
+
+    .floating-whatsapp.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .floating-whatsapp:hover {
+      background: var(--color-champagne-light);
+    }
+
+    .floating-whatsapp svg {
+      width: 23px;
+      height: 23px;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      clip-path: inset(50%);
+    }
+
+    /* Entrada sutil dos blocos ao rolar */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 650ms ease, transform 650ms ease;
+    }
+
+    .reveal.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (min-width: 768px) {
+      :root {
+        --header-height: 88px;
+      }
+
+      .section {
+        padding-block: 124px;
+      }
+
+      .menu-toggle {
+        display: none;
+      }
+
+      .header-nav {
+        position: static;
+        display: block;
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+
+      .nav-links {
+        flex-direction: row;
+        align-items: center;
+        gap: clamp(18px, 3vw, 38px);
+      }
+
+      .nav-link {
+        padding: 10px 0;
+        color: rgba(245, 243, 238, .86);
+        font-size: .76rem;
+      }
+
+      .header-cta {
+        display: inline-flex;
+        padding: 10px 16px;
+        font-size: .75rem;
+      }
+
+      .property-grid {
+        gap: 24px;
+      }
+
+      .property-card {
+        flex-basis: calc((100% - 24px) / 2);
+      }
+
+      .advantages-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 30px;
+      }
+
+      .contact-panel {
+        grid-template-columns: 1.1fr .9fr;
+        gap: 64px;
+        padding: 48px;
+      }
+
+      .contact-action {
+        align-items: flex-start;
+      }
+
+      .contact-action .button {
+        width: auto;
+        min-width: 240px;
+      }
+
+      .footer-main {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+        gap: 50px;
+      }
+
+      .footer-bottom {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .property-image-wrap {
+        height: 255px;
+      }
+
+      .hero-content {
+        padding-block: 100px 120px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .container,
+      .header-inner,
+      .hero-content {
+        width: calc(100% - 36px);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .section {
+        padding-block: 82px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #diferenciais,
+      #sobre,
+      #contato {
+        text-align: center;
+      }
+
+      #diferenciais .eyebrow,
+      #sobre .eyebrow,
+      #contato .eyebrow {
+        justify-content: center;
+      }
+
+      #diferenciais .section-heading,
+      #sobre .section-heading,
+      #contato .section-heading {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      #diferenciais .advantage-icon {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .notice {
+        border-top: 1px solid rgba(184, 149, 91, .5);
+        border-left: 0;
+        padding: 14px 12px;
+      }
+
+      .carousel-controls {
+        justify-content: center;
+      }
+
+      .advantage p,
+      .about-copy {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .creci-note {
+        justify-content: center;
+      }
+
+      .contact-panel {
+        padding: 28px 18px;
+      }
+
+      .contact-details {
+        text-align: left;
+      }
+
+      .contact-action {
+        align-items: center;
+      }
+
+      .contact-action p {
+        margin-inline: auto;
+      }
+
+      .contact-action .button {
+        max-width: 320px;
+      }
+
+      .footer-main,
+      .footer-bottom {
+        text-align: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      .property-grid {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cabeçalho fixo -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#inicio" aria-label="Ewerton Imóveis, início">
+        <span class="brand-name">Ewerton Imóveis</span>
+        <span class="brand-credential">CRECI 177849-F</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="primary-navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+
+      <nav class="header-nav" id="primary-navigation" aria-label="Navegação principal">
+        <ul class="nav-links">
+          <li><a class="nav-link" href="#imoveis">Imóveis</a></li>
+          <li><a class="nav-link" href="#diferenciais">Diferenciais</a></li>
+          <li><a class="nav-link" href="#sobre">Sobre</a></li>
+          <li><a class="nav-link" href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+
+      <a class="button button--gold header-cta" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20im%C3%B3veis." target="_blank" rel="noopener noreferrer">
+        <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+          <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
+        </svg>
+        WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Abertura da página -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <img class="hero-image" src="./assets/hero.png" alt="Vista aérea da cidade de Americana ao entardecer" fetchpriority="high">
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="eyebrow">Imóveis de médio e alto padrão</p>
+        <h1 class="hero-title" id="hero-title">Seu novo capítulo começa aqui.</h1>
+        <p class="hero-subtitle">Imóveis em Americana, Santa Bárbara d'Oeste e Nova Odessa.</p>
+        <p class="hero-description">Encontre o imóvel ideal para você e sua família, com atendimento personalizado.</p>
+        <div class="hero-actions">
+          <a class="button button--outline" href="#imoveis">Explorar imóveis</a>
+          <a class="button button--gold" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Vi%20o%20site%20e%20gostaria%20de%20conversar%20sobre%20im%C3%B3veis." target="_blank" rel="noopener noreferrer">
+            <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
+            </svg>
+            Fale comigo pelo WhatsApp
+          </a>
+        </div>
+      </div>
+      <span class="scroll-cue" aria-hidden="true">Role para descobrir</span>
+    </section>
+
+    <!-- Vitrine com exemplos demonstrativos -->
+    <section class="section" id="imoveis" aria-labelledby="properties-title">
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow">Seleção em destaque</p>
+          <h2 class="section-heading" id="properties-title">Espaços para viver bem.</h2>
+          <p class="section-intro">Conheça os exemplos apresentados nesta prévia e imagine as possibilidades para o seu próximo endereço.</p>
+        </div>
+
+        <p class="notice reveal">Imóveis exibidos como exemplos ilustrativos de apresentação. Valores, características e imagens não correspondem a anúncios reais disponíveis.</p>
+
+        <div class="property-carousel">
+          <div class="carousel-controls" aria-label="Controles do catálogo">
+            <button class="carousel-button carousel-button--previous" type="button" aria-label="Ver imóvel anterior" aria-controls="property-track" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m15 18-6-6 6-6"></path>
+              </svg>
+            </button>
+            <button class="carousel-button carousel-button--next" type="button" aria-label="Ver próximo imóvel" aria-controls="property-track">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="property-grid" id="property-track" aria-label="Imóveis demonstrativos" aria-roledescription="carrossel">
+          <article class="property-card reveal">
+            <div class="property-image-wrap">
+              <img class="property-image" src="./assets/img/imoveis/imovel-1/sala-estar.jpg" alt="Imagem ilustrativa de apartamento com sala integrada e sacada gourmet" loading="lazy">
+              <span class="city-tag">Santa Bárbara d'Oeste – SP</span>
+            </div>
+            <div class="property-content">
+              <h3 class="property-title">Apartamento com sacada gourmet</h3>
+              <p class="property-price">R$ 435.000</p>
+              <ul class="property-features">
+                <li>57 m² · 2 dormitórios (1 suíte)</li>
+                <li>Móveis planejados, sacada gourmet e vista livre</li>
+                <li>Elevador, fechadura eletrônica e 2 vagas</li>
+                <li>Condomínio com piscina, academia, quadra e portaria 24h</li>
+                <li>Aceita financiamento</li>
+              </ul>
+              <div class="property-actions">
+                <a class="button details-button" href="./imovel.html?id=apartamento-sacada-gourmet">Ver imóvel</a>
+                <a class="button property-button" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Vi%20o%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%3A%20Apartamento%20com%20sacada%20gourmet." target="_blank" rel="noopener noreferrer">
+                  <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path></svg>
+                  Tenho interesse
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="property-card reveal">
+            <div class="property-image-wrap property-image-wrap--interior">
+              <img class="property-image" src="./assets/img/imoveis/imovel-2/sala-estar.jpg" alt="Imagem ilustrativa de apartamento com interiores planejados" loading="lazy">
+              <span class="city-tag">Americana – SP</span>
+            </div>
+            <div class="property-content">
+              <h3 class="property-title">Apartamento com sacada e elevador</h3>
+              <p class="property-price">R$ 265.000</p>
+              <ul class="property-features">
+                <li>2 dormitórios, móveis planejados e sacada</li>
+                <li>Elevador e garagem coberta</li>
+                <li>Condomínio com piscina, salão de festas e playground</li>
+                <li>Quiosque com churrasqueira e mini mercado 24h</li>
+                <li>Portaria 24h · Aceita financiamento</li>
+              </ul>
+              <div class="property-actions">
+                <a class="button details-button" href="./imovel.html?id=apartamento-sacada-elevador">Ver imóvel</a>
+                <a class="button property-button" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Vi%20o%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%3A%20Apartamento%20com%20sacada%20e%20elevador." target="_blank" rel="noopener noreferrer">
+                  <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path></svg>
+                  Tenho interesse
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="property-card reveal">
+            <div class="property-image-wrap property-image-wrap--house">
+              <img class="property-image" src="./assets/img/imoveis/imovel-3/fachada.jpg" alt="Imagem ilustrativa de casa com fachada moderna e paisagismo" loading="lazy">
+              <span class="city-tag">Parque da Liberdade</span>
+            </div>
+            <div class="property-content">
+              <h3 class="property-title">Casa com três dormitórios</h3>
+              <p class="property-price">R$ 399.900</p>
+              <ul class="property-features">
+                <li>Terreno de 150 m² · 99 m² de área construída</li>
+                <li>3 dormitórios (1 suíte com planejados)</li>
+                <li>Sala de estar e jantar, área de luz e lavanderia nos fundos</li>
+                <li>Vaga para 2 carros</li>
+                <li>Aceita financiamento</li>
+              </ul>
+              <div class="property-actions">
+                <a class="button details-button" href="./imovel.html?id=casa-tres-dormitorios">Ver imóvel</a>
+                <a class="button property-button" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Vi%20o%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%3A%20Casa%20com%20tr%C3%AAs%20dormit%C3%B3rios." target="_blank" rel="noopener noreferrer">
+                  <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path></svg>
+                  Tenho interesse
+                </a>
+              </div>
+            </div>
+          </article>
+          </div>
+          <p class="visually-hidden carousel-status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Diferenciais de atendimento -->
+    <section class="section section--alternate" id="diferenciais" aria-labelledby="advantages-title">
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow">Uma jornada mais tranquila</p>
+          <h2 class="section-heading" id="advantages-title">Atendimento atento em cada etapa.</h2>
+        </div>
+
+        <div class="advantages-grid">
+          <article class="advantage reveal">
+            <span class="advantage-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 11.5a7.5 7.5 0 0 1-11.2 6.5L4 19l1-4.1A7.5 7.5 0 1 1 20 11.5Z"></path>
+                <path d="M9 10h6M9 13h4"></path>
+              </svg>
+            </span>
+            <h3>Atendimento personalizado</h3>
+            <p>Acompanhamento próximo do primeiro contato à entrega das chaves.</p>
+          </article>
+
+          <article class="advantage reveal">
+            <span class="advantage-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"></path>
+                <path d="M14 3.5v5h5M9 13h6M9 16.5h6"></path>
+              </svg>
+            </span>
+            <h3>Acompanhamento na negociação</h3>
+            <p>Apoio na documentação, proposta e financiamento.</p>
+          </article>
+
+          <article class="advantage reveal">
+            <span class="advantage-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10Z"></path>
+                <path d="M9 21v-7h6v7M7.5 10h.01M12 10h.01M16.5 10h.01"></path>
+              </svg>
+            </span>
+            <h3>Atuação regional</h3>
+            <p>Conhecimento do mercado de Americana, Santa Bárbara d'Oeste e Nova Odessa.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Apresentação profissional sem imagem de pessoa -->
+    <section class="section" id="sobre" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <div class="about-copy reveal">
+          <p class="eyebrow">Sobre o corretor</p>
+          <h2 class="section-heading" id="about-title">Uma escolha importante merece atenção de verdade.</h2>
+          <p>Ewerton Imóveis atende em Americana, Santa Bárbara d’Oeste e Nova Odessa. Entre em contato para conversar sobre o imóvel que você procura.</p>
+          <p class="about-tagline">Atendimento próximo e transparente.</p>
+          <span class="creci-note">CRECI 177849-F</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Canais diretos de contato -->
+    <section class="section section--alternate" id="contato" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact-panel reveal">
+          <div>
+            <p class="eyebrow">Vamos conversar</p>
+            <h2 class="section-heading" id="contact-title">O próximo passo começa com uma conversa.</h2>
+            <div class="contact-details">
+              <a class="contact-link" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20im%C3%B3veis." target="_blank" rel="noopener noreferrer">
+                <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+                  <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
+                </svg>
+                <span>WhatsApp&nbsp; (19) 99518-8676</span>
+              </a>
+              <a class="contact-link" href="https://www.instagram.com/ewerton.imoveis/" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M17.5 6.5h.01"></path>
+                </svg>
+                <span>Instagram&nbsp; @ewerton.imoveis</span>
+              </a>
+              <div class="contact-static">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3 4 7v5c0 4.5 3.4 7.6 8 9 4.6-1.4 8-4.5 8-9V7l-8-4Z"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                <span>CRECI 177849-F</span>
+              </div>
+            </div>
+          </div>
+          <div class="contact-action">
+            <p>Conte o que você procura e receba um atendimento personalizado para encontrar opções que façam sentido para você.</p>
+            <a class="button button--gold" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20im%C3%B3veis." target="_blank" rel="noopener noreferrer">
+              <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+                <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
+              </svg>
+              Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé com endereço sujeito a confirmação -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <p class="footer-name">Ewerton Imóveis</p>
+          <p class="footer-role">CRECI 177849-F</p>
+          <a class="footer-role" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20im%C3%B3veis." target="_blank" rel="noopener noreferrer">
+            <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
+            </svg>
+            WhatsApp (19) 99518-8676
+          </a>
+        </div>
+        <div>
+          <p class="footer-meta"><strong>Atuação</strong><br>Americana, Santa Bárbara d'Oeste e Nova Odessa (SP)</p>
+          <p class="footer-meta"><strong>Endereço</strong><br>Rua Fernando Camargo, 500, Centro, Americana – SP, CEP 13465-020<br><span>endereço sujeito a confirmação</span></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-disclaimer">Prévia demonstrativa. Layout, identidade visual e imóveis são ilustrativos e não representam anúncios oficiais.</p>
+        <p class="copyright">© <span id="current-year">2026</span> Ewerton Imóveis</p>
+      </div>
+    </div>
+  </footer>
+
+  <a class="floating-whatsapp" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20im%C3%B3veis." target="_blank" rel="noopener noreferrer" aria-label="Falar com Ewerton Imóveis pelo WhatsApp">
+    <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+      <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
+    </svg>
+  </a>
+
+  <script>
+    // Navegação, estado do cabeçalho, animações e fallbacks das imagens locais.
+    (() => {
+      const header = document.querySelector("#site-header");
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navigation = document.querySelector("#primary-navigation");
+      const floatingWhatsApp = document.querySelector(".floating-whatsapp");
+      const hero = document.querySelector(".hero");
+      const propertyTrack = document.querySelector("#property-track");
+      const carouselPrevious = document.querySelector(".carousel-button--previous");
+      const carouselNext = document.querySelector(".carousel-button--next");
+      const carouselStatus = document.querySelector(".carousel-status");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const propertyCards = [...propertyTrack.querySelectorAll(".property-card")];
+
+      const getCarouselStep = () => {
+        const firstCard = propertyCards[0];
+        const trackStyles = window.getComputedStyle(propertyTrack);
+        const gap = Number.parseFloat(trackStyles.columnGap) || 0;
+        return firstCard.getBoundingClientRect().width + gap;
+      };
+
+      const updateCarouselControls = () => {
+        const maxScroll = propertyTrack.scrollWidth - propertyTrack.clientWidth;
+        carouselPrevious.disabled = propertyTrack.scrollLeft <= 2;
+        carouselNext.disabled = propertyTrack.scrollLeft >= maxScroll - 2;
+        const activeIndex = Math.min(
+          propertyCards.length - 1,
+          Math.max(0, Math.round(propertyTrack.scrollLeft / getCarouselStep()))
+        );
+        carouselStatus.textContent = `Imóvel ${activeIndex + 1} de ${propertyCards.length}: ${propertyCards[activeIndex].querySelector(".property-title").textContent}`;
+      };
+
+      const scrollCarousel = (direction) => {
+        propertyTrack.scrollBy({
+          left: getCarouselStep() * direction,
+          behavior: reducedMotion.matches ? "auto" : "smooth"
+        });
+      };
+
+      carouselPrevious.addEventListener("click", () => scrollCarousel(-1));
+      carouselNext.addEventListener("click", () => scrollCarousel(1));
+      propertyTrack.addEventListener("scroll", () => window.requestAnimationFrame(updateCarouselControls), { passive: true });
+      window.addEventListener("resize", updateCarouselControls);
+      updateCarouselControls();
+
+      const updateScrollState = () => {
+        const scrollY = window.scrollY;
+        header.classList.toggle("is-scrolled", scrollY > 60);
+        floatingWhatsApp.classList.toggle("is-visible", scrollY > hero.offsetHeight - 100);
+      };
+
+      updateScrollState();
+      window.addEventListener("scroll", updateScrollState, { passive: true });
+
+      menuToggle.addEventListener("click", () => {
+        const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Abrir menu" : "Fechar menu");
+        navigation.classList.toggle("is-open", !isOpen);
+      });
+
+      navigation.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navigation.classList.remove("is-open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Abrir menu");
+        });
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const target = document.querySelector(link.getAttribute("href"));
+          if (!target) return;
+          event.preventDefault();
+          target.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "start" });
+        });
+      });
+
+      document.querySelectorAll("img").forEach((image) => {
+        image.addEventListener("error", () => {
+          image.hidden = true;
+        }, { once: true });
+      });
+
+      const revealItems = document.querySelectorAll(".reveal");
+      if (reducedMotion.matches || !("IntersectionObserver" in window)) {
+        revealItems.forEach((item) => item.classList.add("is-revealed"));
+      } else {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-revealed");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealItems.forEach((item) => revealObserver.observe(item));
+      }
+
+      document.querySelector("#current-year").textContent = String(new Date().getFullYear());
+    })();
+  </script>
+</body>
+</html>

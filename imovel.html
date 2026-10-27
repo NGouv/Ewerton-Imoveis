@@ -1,0 +1,1174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111416">
+  <meta name="description" content="Veja a galeria e os detalhes demonstrativos deste imóvel da Ewerton Imóveis.">
+  <title>Detalhes do imóvel | Ewerton Imóveis</title>
+
+  <!--
+    PÁGINA DE DETALHES DEMONSTRATIVA
+    Troque as fotos em assets/img/imoveis/imovel-1, imovel-2 e imovel-3.
+    Os dados e imagens são exemplos de apresentação, não anúncios confirmados.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --graphite: #111416;
+      --graphite-soft: #171b1d;
+      --graphite-light: #1d2224;
+      --champagne: #B8955B;
+      --champagne-light: #d3b77f;
+      --ice: #F5F3EE;
+      --gray: #A7A9AC;
+      --line: rgba(245, 243, 238, .13);
+      --heading: "Playfair Display", Georgia, serif;
+      --body: "Inter", Arial, sans-serif;
+      --content-width: 1160px;
+      --transition: 240ms ease;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--graphite);
+      color: var(--ice);
+      font-family: var(--body);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      color: inherit;
+      font: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--champagne-light);
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(var(--content-width), calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: relative;
+      z-index: 3;
+      border-bottom: 1px solid var(--line);
+      background: rgba(17, 20, 22, .97);
+    }
+
+    .header-inner {
+      display: flex;
+      min-height: 82px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      flex-direction: column;
+      flex: 0 0 auto;
+      line-height: 1.25;
+    }
+
+    .brand-name {
+      font-family: var(--heading);
+      font-size: 1.18rem;
+      font-weight: 600;
+    }
+
+    .brand-credential {
+      margin-top: 4px;
+      color: var(--gray);
+      font-size: .63rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .back-link {
+      color: #d1d1cf;
+      font-size: .8rem;
+      transition: color var(--transition);
+    }
+
+    .back-link:hover {
+      color: var(--champagne-light);
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 18px;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      background: var(--champagne);
+      color: #141414;
+      cursor: pointer;
+      font-size: .8rem;
+      font-weight: 600;
+      line-height: 1.35;
+      text-align: center;
+      transition: background-color var(--transition), transform var(--transition);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: var(--champagne-light);
+    }
+
+    .button svg {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+    }
+
+    .page-main {
+      padding-block: 34px 100px;
+    }
+
+    .breadcrumb {
+      margin: 0 0 25px;
+      color: var(--gray);
+      font-size: .75rem;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--champagne-light);
+    }
+
+    .breadcrumb span {
+      margin-inline: 8px;
+      color: var(--champagne);
+    }
+
+    .demo-notice {
+      margin: 0 0 30px;
+      padding: 11px 15px;
+      border-left: 2px solid var(--champagne);
+      background: rgba(245, 243, 238, .045);
+      color: #c4c5c6;
+      font-size: .75rem;
+      line-height: 1.55;
+    }
+
+    .property-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--champagne-light);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      overflow-wrap: anywhere;
+    }
+
+    .property-title {
+      margin: 0;
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3.35rem);
+      font-weight: 500;
+      letter-spacing: -.035em;
+      line-height: 1.14;
+    }
+
+    .property-location {
+      margin: 11px 0 0;
+      color: var(--gray);
+      font-size: .9rem;
+    }
+
+    .property-code {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border: 1px solid rgba(184, 149, 91, .35);
+      color: var(--champagne-light);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+    }
+
+    .detail-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, .75fr);
+      align-items: start;
+      gap: 28px;
+    }
+
+    .gallery {
+      min-width: 0;
+    }
+
+    .main-photo-wrap {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #202526;
+      aspect-ratio: 16 / 10;
+    }
+
+    .main-photo-button {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: zoom-in;
+    }
+
+    .main-photo {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-control {
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgba(245, 243, 238, .42);
+      border-radius: 50%;
+      background: rgba(17, 20, 22, .72);
+      color: var(--ice);
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: border-color var(--transition), background-color var(--transition);
+    }
+
+    .photo-control:hover {
+      border-color: var(--champagne-light);
+      background: rgba(17, 20, 22, .94);
+    }
+
+    .photo-control svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .photo-control--previous {
+      left: 16px;
+    }
+
+    .photo-control--next {
+      right: 16px;
+    }
+
+    .photo-count {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      z-index: 1;
+      padding: 6px 10px;
+      border: 1px solid rgba(245, 243, 238, .22);
+      border-radius: 2px;
+      background: rgba(17, 20, 22, .78);
+      color: var(--ice);
+      font-size: .7rem;
+      font-variant-numeric: tabular-nums;
+      backdrop-filter: blur(7px);
+    }
+
+    .photo-caption {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      z-index: 1;
+      max-width: calc(100% - 125px);
+      color: #fff;
+      font-size: .72rem;
+      text-shadow: 0 1px 5px #000;
+      pointer-events: none;
+    }
+
+    .thumbnail-list {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      margin: 13px 0 0;
+      padding: 3px 2px 9px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(184, 149, 91, .55) transparent;
+      overscroll-behavior-x: contain;
+    }
+
+    .thumbnail {
+      position: relative;
+      flex: 0 0 104px;
+      height: 72px;
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid rgba(245, 243, 238, .14);
+      border-radius: 3px;
+      background: var(--graphite-light);
+      cursor: pointer;
+      scroll-snap-align: start;
+      transition: border-color var(--transition), opacity var(--transition);
+    }
+
+    .thumbnail[aria-pressed="true"] {
+      border: 2px solid var(--champagne-light);
+    }
+
+    .thumbnail img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .thumbnail:hover {
+      opacity: .8;
+    }
+
+    .property-summary {
+      padding: 24px;
+      border: 1px solid rgba(184, 149, 91, .25);
+      border-radius: 4px;
+      background:
+        radial-gradient(ellipse at 100% 0%, rgba(184, 149, 91, .1), transparent 50%),
+        var(--graphite-light);
+    }
+
+    .summary-label {
+      margin: 0;
+      color: var(--gray);
+      font-size: .71rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .property-price {
+      margin: 4px 0 21px;
+      color: var(--champagne-light);
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      font-weight: 600;
+      letter-spacing: -.035em;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+    }
+
+    .stat {
+      min-width: 0;
+      padding: 14px 10px 13px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .stat:nth-child(odd) {
+      border-right: 1px solid var(--line);
+    }
+
+    .stat:nth-child(even) {
+      padding-left: 14px;
+    }
+
+    .stat-value {
+      display: block;
+      color: var(--ice);
+      font-size: .9rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 4px;
+      color: var(--gray);
+      font-size: .66rem;
+      line-height: 1.35;
+    }
+
+    .whatsapp-cta {
+      width: 100%;
+      margin-top: 22px;
+      min-height: 54px;
+    }
+
+    .summary-note {
+      margin: 14px 0 0;
+      color: var(--gray);
+      font-size: .68rem;
+      text-align: center;
+    }
+
+    .detail-sections {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .8fr);
+      gap: 48px;
+      margin-top: 68px;
+    }
+
+    .detail-section + .detail-section {
+      margin-top: 36px;
+    }
+
+    .section-heading {
+      margin: 0 0 17px;
+      font-family: var(--heading);
+      font-size: 1.65rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .description {
+      max-width: 760px;
+      margin: 0;
+      color: #c7c8c8;
+      font-size: .9rem;
+      line-height: 1.8;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      color: #c7c8c8;
+      font-size: .83rem;
+      list-style: none;
+    }
+
+    .feature-list li {
+      position: relative;
+      padding-left: 19px;
+    }
+
+    .feature-list li::before {
+      position: absolute;
+      top: .68em;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--champagne);
+      content: "";
+    }
+
+    .condo-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--graphite-soft);
+    }
+
+    .condo-card .section-heading {
+      font-size: 1.4rem;
+    }
+
+    .not-informed {
+      color: var(--gray);
+      font-size: .8rem;
+      font-style: italic;
+    }
+
+    .site-footer {
+      padding-block: 25px;
+      border-top: 1px solid var(--line);
+      color: var(--gray);
+      font-size: .7rem;
+      text-align: center;
+    }
+
+    .site-footer p {
+      margin: 0;
+    }
+
+    .lightbox[hidden],
+    [hidden] {
+      display: none !important;
+    }
+
+    .lightbox {
+      position: fixed;
+      z-index: 10;
+      inset: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      padding: 18px;
+      background: rgba(6, 8, 9, .96);
+      backdrop-filter: blur(8px);
+    }
+
+    .lightbox-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: #dededb;
+      font-size: .8rem;
+    }
+
+    .lightbox-close {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: rgba(245, 243, 238, .06);
+      cursor: pointer;
+    }
+
+    .lightbox-close svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .lightbox-stage {
+      position: relative;
+      display: grid;
+      min-height: 0;
+      place-items: center;
+      margin-block: 12px;
+    }
+
+    .lightbox-image {
+      display: block;
+      max-width: min(100%, 1400px);
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .lightbox .photo-control {
+      width: 48px;
+      height: 48px;
+    }
+
+    .lightbox-caption {
+      min-height: 24px;
+      color: var(--gray);
+      font-size: .75rem;
+      text-align: center;
+    }
+
+    .unavailable {
+      padding-block: 100px;
+      text-align: center;
+    }
+
+    .unavailable h1 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 500;
+    }
+
+    @media (max-width: 850px) {
+      .detail-layout {
+        grid-template-columns: minmax(0, 1.2fr) minmax(255px, .8fr);
+        gap: 20px;
+      }
+
+      .property-summary {
+        padding: 19px;
+      }
+
+      .detail-sections {
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: calc(100% - 36px);
+      }
+
+      .header-inner {
+        min-height: 72px;
+      }
+
+      .header-actions {
+        gap: 8px;
+      }
+
+      .back-link {
+        max-width: 82px;
+        font-size: .68rem;
+        line-height: 1.35;
+        text-align: right;
+      }
+
+      .header-actions .button {
+        min-height: 42px;
+        padding: 8px 11px;
+        font-size: .69rem;
+      }
+
+      .header-actions .button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .page-main {
+        padding-top: 24px;
+      }
+
+      .breadcrumb {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .demo-notice {
+        padding-inline: 12px;
+        text-align: center;
+      }
+
+      .property-heading {
+        display: block;
+        margin-bottom: 22px;
+        text-align: center;
+      }
+
+      .property-code {
+        display: inline-flex;
+        margin-top: 13px;
+      }
+
+      .detail-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-photo-wrap {
+        aspect-ratio: 4 / 3;
+      }
+
+      .photo-control {
+        width: 40px;
+        height: 40px;
+      }
+
+      .photo-control--previous {
+        left: 9px;
+      }
+
+      .photo-control--next {
+        right: 9px;
+      }
+
+      .thumbnail-list {
+        gap: 8px;
+        margin-top: 9px;
+      }
+
+      .thumbnail {
+        flex-basis: 84px;
+        height: 62px;
+      }
+
+      .property-summary {
+        padding: 22px;
+      }
+
+      .detail-sections {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+        margin-top: 48px;
+        text-align: center;
+      }
+
+      .detail-section + .detail-section {
+        margin-top: 30px;
+      }
+
+      .feature-list {
+        text-align: left;
+      }
+
+      .condo-card {
+        padding: 20px;
+        text-align: left;
+      }
+
+      .condo-card .section-heading {
+        text-align: center;
+      }
+
+      .lightbox {
+        padding: 12px;
+      }
+
+      .lightbox-stage {
+        margin-inline: -12px;
+      }
+
+      .lightbox .photo-control--previous {
+        left: 8px;
+      }
+
+      .lightbox .photo-control--next {
+        right: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html#inicio" aria-label="Ewerton Imóveis, página inicial">
+        <span class="brand-name">Ewerton Imóveis</span>
+        <span class="brand-credential">CRECI 177849-F</span>
+      </a>
+      <div class="header-actions">
+        <a class="back-link" href="./index.html#imoveis">Voltar aos imóveis</a>
+        <a class="button" id="header-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
+          </svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-main container" id="property-content" hidden>
+    <p class="breadcrumb"><a href="./index.html#inicio">Início</a><span>/</span><a href="./index.html#imoveis">Imóveis</a><span>/</span><strong id="breadcrumb-title"></strong></p>
+    <p class="demo-notice">Prévia demonstrativa: imóvel, valores, características e fotografias são ilustrativos e não representam anúncio disponível.</p>
+
+    <div class="property-heading">
+      <div>
+        <p class="eyebrow">Detalhes do imóvel demonstrativo</p>
+        <h1 class="property-title" id="property-title"></h1>
+        <p class="property-location" id="property-location"></p>
+      </div>
+      <span class="property-code" id="property-code"></span>
+    </div>
+
+    <div class="detail-layout">
+      <section class="gallery" aria-label="Galeria de fotografias ilustrativas">
+        <div class="main-photo-wrap" id="gallery-swipe">
+          <button class="main-photo-button" type="button" id="open-lightbox" aria-label="Ampliar fotografia atual">
+            <img class="main-photo" id="main-photo" src="" alt="">
+          </button>
+          <button class="photo-control photo-control--previous" type="button" id="photo-previous" aria-label="Ver fotografia anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+          </button>
+          <button class="photo-control photo-control--next" type="button" id="photo-next" aria-label="Ver próxima fotografia">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+          </button>
+          <span class="photo-caption" id="photo-caption"></span>
+          <span class="photo-count" id="photo-count" aria-live="polite"></span>
+        </div>
+        <div class="thumbnail-list" id="thumbnail-list" role="group" aria-label="Selecionar fotografia"></div>
+      </section>
+
+      <aside class="property-summary" aria-label="Resumo do imóvel">
+        <p class="summary-label">Valor demonstrativo</p>
+        <p class="property-price" id="property-price"></p>
+        <div class="stats-grid" id="property-stats"></div>
+        <a class="button whatsapp-cta" id="property-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
+          </svg>
+          Consultar pelo WhatsApp
+        </a>
+        <p class="summary-note">CRECI 177849-F · Ewerton Imóveis</p>
+      </aside>
+    </div>
+
+    <div class="detail-sections">
+      <div>
+        <section class="detail-section" aria-labelledby="description-heading">
+          <h2 class="section-heading" id="description-heading">Sobre este imóvel</h2>
+          <p class="description" id="property-description"></p>
+        </section>
+        <section class="detail-section" aria-labelledby="features-heading">
+          <h2 class="section-heading" id="features-heading">Características e diferenciais</h2>
+          <ul class="feature-list" id="property-features"></ul>
+        </section>
+      </div>
+      <aside class="condo-card" id="condo-section">
+        <h2 class="section-heading" id="condo-heading"></h2>
+        <ul class="feature-list" id="property-condo"></ul>
+      </aside>
+    </div>
+  </main>
+
+  <main class="container unavailable" id="not-found" hidden>
+    <p class="eyebrow">Imóvel não encontrado</p>
+    <h1>Não foi possível localizar este imóvel.</h1>
+    <a class="button" href="./index.html#imoveis">Voltar ao catálogo</a>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="current-year"></span> Ewerton Imóveis · CRECI 177849-F</p>
+      <p>Endereço informado: Rua Fernando Camargo, 500, Centro, Americana – SP, CEP 13465-020.</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualização ampliada das fotografias" hidden>
+    <div class="lightbox-top">
+      <span id="lightbox-count"></span>
+      <button class="lightbox-close" type="button" id="close-lightbox" aria-label="Fechar fotografia ampliada">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+      </button>
+    </div>
+    <div class="lightbox-stage" id="lightbox-swipe">
+      <button class="photo-control photo-control--previous" type="button" id="lightbox-previous" aria-label="Ver fotografia anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+      </button>
+      <img class="lightbox-image" id="lightbox-image" src="" alt="">
+      <button class="photo-control photo-control--next" type="button" id="lightbox-next" aria-label="Ver próxima fotografia">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+      </button>
+    </div>
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+
+  <script>
+    // Os dados do catálogo ficam juntos; campos sem informação permanecem identificados.
+    const properties = {
+      "apartamento-sacada-gourmet": {
+        folder: "imovel-1",
+        code: "IMÓVEL 01",
+        title: "Apartamento com sacada gourmet",
+        location: "Santa Bárbara d’Oeste – SP",
+        price: "R$ 435.000",
+        stats: [
+          ["2", "dormitórios"],
+          ["1 suíte", "suítes"],
+          ["Não informado", "banheiros"],
+          ["2", "vagas"],
+          ["57 m²", "área privativa"],
+          ["Não informado", "área do terreno"]
+        ],
+        description: "Exemplo ilustrativo de apartamento com 57 m², dois dormitórios, sendo uma suíte, móveis planejados e sacada gourmet. O exemplo também apresenta vista livre, elevador, fechadura eletrônica e duas vagas de garagem. Aceita financiamento.",
+        features: [
+          "57 m²",
+          "2 dormitórios, sendo 1 suíte",
+          "Móveis planejados e sacada gourmet",
+          "Vista livre, elevador e fechadura eletrônica",
+          "2 vagas de garagem",
+          "Aceita financiamento"
+        ],
+        condoTitle: "Condomínio",
+        condo: ["Piscina", "Academia", "Quadra", "Portaria 24h"],
+        gallery: [
+          ["sala-estar.jpg", "Sala de estar integrada"],
+          ["sala-jantar.jpg", "Sala de jantar"],
+          ["cozinha.jpg", "Cozinha"],
+          ["quarto-1.jpg", "Dormitório"],
+          ["suite.jpg", "Suíte"],
+          ["banheiro.jpg", "Banheiro"],
+          ["sacada.jpg", "Sacada gourmet"],
+          ["fachada.jpg", "Fachada do edifício"],
+          ["area-lazer.jpg", "Área de lazer do condomínio"]
+        ]
+      },
+      "apartamento-sacada-elevador": {
+        folder: "imovel-2",
+        code: "IMÓVEL 02",
+        title: "Apartamento com sacada e elevador",
+        location: "Americana – SP",
+        price: "R$ 265.000",
+        stats: [
+          ["2", "dormitórios"],
+          ["Não informado", "suítes"],
+          ["Não informado", "banheiros"],
+          ["Não informado", "vagas"],
+          ["Não informado", "área privativa"],
+          ["Não informado", "área do terreno"]
+        ],
+        description: "Exemplo ilustrativo de apartamento com dois dormitórios, móveis planejados e sacada. O exemplo informa elevador, garagem coberta e condomínio com piscina, salão de festas, playground, quiosque com churrasqueira, mini mercado 24h e portaria 24h. Aceita financiamento.",
+        features: [
+          "2 dormitórios",
+          "Móveis planejados e sacada",
+          "Elevador e garagem coberta",
+          "Aceita financiamento"
+        ],
+        condoTitle: "Condomínio",
+        condo: [
+          "Piscina e salão de festas",
+          "Playground",
+          "Quiosque com churrasqueira",
+          "Mini mercado 24h",
+          "Portaria 24h"
+        ],
+        gallery: [
+          ["sala-estar.jpg", "Sala de estar com interiores planejados"],
+          ["sala-jantar.jpg", "Sala de jantar"],
+          ["cozinha.jpg", "Cozinha"],
+          ["quarto-1.jpg", "Dormitório"],
+          ["quarto-2.jpg", "Segundo dormitório"],
+          ["banheiro.jpg", "Banheiro"],
+          ["sacada.jpg", "Sacada"],
+          ["fachada.jpg", "Fachada do edifício"],
+          ["area-lazer.jpg", "Área de lazer do condomínio"]
+        ]
+      },
+      "casa-tres-dormitorios": {
+        folder: "imovel-3",
+        code: "IMÓVEL 03",
+        title: "Casa com três dormitórios",
+        location: "Parque da Liberdade",
+        price: "R$ 399.900",
+        stats: [
+          ["3", "dormitórios"],
+          ["1 suíte", "suítes"],
+          ["Não informado", "banheiros"],
+          ["2", "vagas"],
+          ["99 m²", "área construída"],
+          ["150 m²", "área do terreno"]
+        ],
+        description: "Exemplo ilustrativo de casa no Parque da Liberdade, com terreno de 150 m² e 99 m² de área construída. A descrição de exemplo inclui três dormitórios, sendo uma suíte com planejados, sala de estar e jantar, área de luz, lavanderia nos fundos e vaga para dois carros. Aceita financiamento.",
+        features: [
+          "Terreno de 150 m² e área construída de 99 m²",
+          "3 dormitórios, sendo 1 suíte com planejados",
+          "Sala de estar e jantar",
+          "Área de luz e lavanderia nos fundos",
+          "Vaga para 2 carros",
+          "Aceita financiamento"
+        ],
+        condoTitle: "Informações adicionais",
+        condo: ["Não informado nesta prévia."],
+        gallery: [
+          ["fachada.jpg", "Fachada da casa"],
+          ["sala-estar.jpg", "Sala de estar"],
+          ["sala-jantar.jpg", "Sala de jantar"],
+          ["cozinha.jpg", "Cozinha"],
+          ["quarto-1.jpg", "Dormitório"],
+          ["quarto-2.jpg", "Segundo dormitório"],
+          ["suite.jpg", "Suíte"],
+          ["banheiro.jpg", "Banheiro"],
+          ["area-externa.jpg", "Área externa e garagem"]
+        ]
+      }
+    };
+
+    (() => {
+      const property = properties[new URLSearchParams(window.location.search).get("id")];
+      const content = document.querySelector("#property-content");
+      const notFound = document.querySelector("#not-found");
+      document.querySelector("#current-year").textContent = String(new Date().getFullYear());
+
+      if (!property) {
+        notFound.hidden = false;
+        document.title = "Imóvel não encontrado | Ewerton Imóveis";
+        return;
+      }
+
+      content.hidden = false;
+      document.title = `${property.title} | Ewerton Imóveis`;
+      document.querySelector("#breadcrumb-title").textContent = property.title;
+      document.querySelector("#property-title").textContent = property.title;
+      document.querySelector("#property-location").textContent = property.location;
+      document.querySelector("#property-price").textContent = property.price;
+      document.querySelector("#property-code").textContent = property.code;
+      document.querySelector("#property-description").textContent = property.description;
+      document.querySelector("#condo-heading").textContent = property.condoTitle;
+
+      const stats = document.querySelector("#property-stats");
+      property.stats.forEach(([value, label]) => {
+        const item = document.createElement("div");
+        item.className = "stat";
+        item.innerHTML = `<span class="stat-value"></span><span class="stat-label"></span>`;
+        item.querySelector(".stat-value").textContent = value;
+        item.querySelector(".stat-label").textContent = label;
+        stats.append(item);
+      });
+
+      const addListItems = (target, values) => {
+        values.forEach((value) => {
+          const item = document.createElement("li");
+          item.textContent = value;
+          target.append(item);
+        });
+      };
+
+      addListItems(document.querySelector("#property-features"), property.features);
+      addListItems(document.querySelector("#property-condo"), property.condo);
+
+      const gallery = property.gallery.map(([file, label]) => ({
+        src: `./assets/img/imoveis/${property.folder}/${file}`,
+        alt: `Imagem ilustrativa: ${label.toLocaleLowerCase("pt-BR")}`,
+        label
+      }));
+      const mainPhoto = document.querySelector("#main-photo");
+      const photoCount = document.querySelector("#photo-count");
+      const photoCaption = document.querySelector("#photo-caption");
+      const thumbnails = document.querySelector("#thumbnail-list");
+      const lightbox = document.querySelector("#lightbox");
+      const lightboxImage = document.querySelector("#lightbox-image");
+      let activeIndex = 0;
+      let lightboxReturnFocus = null;
+      let touchStartX = null;
+
+      const thumbnailButtons = gallery.map((photo, index) => {
+        const button = document.createElement("button");
+        const image = document.createElement("img");
+        button.className = "thumbnail";
+        button.type = "button";
+        button.setAttribute("aria-label", `Mostrar fotografia ${index + 1}: ${photo.label}`);
+        button.setAttribute("aria-pressed", "false");
+        image.src = photo.src;
+        image.alt = "";
+        image.loading = "lazy";
+        button.append(image);
+        button.addEventListener("click", () => showPhoto(index));
+        thumbnails.append(button);
+        return button;
+      });
+
+      const showPhoto = (index) => {
+        activeIndex = (index + gallery.length) % gallery.length;
+        const photo = gallery[activeIndex];
+        mainPhoto.src = photo.src;
+        mainPhoto.alt = photo.alt;
+        photoCaption.textContent = photo.label;
+        photoCount.textContent = `${activeIndex + 1} de ${gallery.length} fotos`;
+        thumbnailButtons.forEach((button, buttonIndex) => {
+          button.setAttribute("aria-pressed", String(buttonIndex === activeIndex));
+        });
+        const selectedThumbnail = thumbnailButtons[activeIndex];
+        const thumbnailRailRect = thumbnails.getBoundingClientRect();
+        const selectedThumbnailRect = selectedThumbnail.getBoundingClientRect();
+        thumbnails.scrollTo({
+          left: thumbnails.scrollLeft + selectedThumbnailRect.left - thumbnailRailRect.left -
+            (thumbnails.clientWidth - selectedThumbnailRect.width) / 2,
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+        });
+        if (!lightbox.hidden) {
+          lightboxImage.src = photo.src;
+          lightboxImage.alt = photo.alt;
+          document.querySelector("#lightbox-count").textContent = `${activeIndex + 1} de ${gallery.length} fotos`;
+          document.querySelector("#lightbox-caption").textContent = photo.label;
+        }
+      };
+
+      const openLightbox = () => {
+        lightboxReturnFocus = document.activeElement;
+        lightbox.hidden = false;
+        document.body.style.overflow = "hidden";
+        showPhoto(activeIndex);
+        document.querySelector("#close-lightbox").focus();
+      };
+
+      const closeLightbox = () => {
+        lightbox.hidden = true;
+        document.body.style.overflow = "";
+        if (lightboxReturnFocus instanceof HTMLElement) lightboxReturnFocus.focus();
+      };
+
+      document.querySelector("#photo-previous").addEventListener("click", () => showPhoto(activeIndex - 1));
+      document.querySelector("#photo-next").addEventListener("click", () => showPhoto(activeIndex + 1));
+      document.querySelector("#open-lightbox").addEventListener("click", openLightbox);
+      document.querySelector("#lightbox-previous").addEventListener("click", () => showPhoto(activeIndex - 1));
+      document.querySelector("#lightbox-next").addEventListener("click", () => showPhoto(activeIndex + 1));
+      document.querySelector("#close-lightbox").addEventListener("click", closeLightbox);
+
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (lightbox.hidden) return;
+        if (event.key === "Escape") closeLightbox();
+        if (event.key === "ArrowLeft") showPhoto(activeIndex - 1);
+        if (event.key === "ArrowRight") showPhoto(activeIndex + 1);
+        if (event.key === "Tab") {
+          const focusable = [...lightbox.querySelectorAll("button")];
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+          }
+        }
+      });
+
+      const bindSwipe = (element) => {
+        element.addEventListener("touchstart", (event) => {
+          touchStartX = event.changedTouches[0].clientX;
+        }, { passive: true });
+
+        element.addEventListener("touchend", (event) => {
+          if (touchStartX === null) return;
+          const deltaX = event.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(deltaX) > 45) showPhoto(activeIndex + (deltaX < 0 ? 1 : -1));
+          touchStartX = null;
+        }, { passive: true });
+      };
+
+      bindSwipe(document.querySelector("#gallery-swipe"));
+      bindSwipe(document.querySelector("#lightbox-swipe"));
+      document.querySelector("#property-whatsapp").href =
+        `https://wa.me/5519995188676?text=${encodeURIComponent(`Olá! Tenho interesse no imóvel ${property.code}: ${property.title}.`)}`;
+      document.querySelector("#header-whatsapp").href =
+        `https://wa.me/5519995188676?text=${encodeURIComponent(`Olá! Gostaria de conversar sobre o imóvel ${property.code}: ${property.title}.`)}`;
+
+      showPhoto(0);
+    })();
+  </script>
+</body>
+</html>
