@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="./css/imovel.css">
 </head>
-<body>
+<body id="top">
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="./index.html#inicio" aria-label="Ewerton Imóveis, página inicial">
@@ -88,7 +88,7 @@
           <h2 class="section-heading" id="description-heading">Sobre este imóvel</h2>
           <p class="description" id="property-description"></p>
         </section>
-        <section class="detail-section" aria-labelledby="features-heading">
+        <section class="detail-section detail-section--features" aria-labelledby="features-heading">
           <h2 class="section-heading" id="features-heading">Características e diferenciais</h2>
           <ul class="feature-list" id="property-features"></ul>
         </section>
@@ -107,9 +107,36 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>© <span id="current-year"></span> Ewerton Imóveis · CRECI 177849-F</p>
-      <p>Endereço informado: Rua Fernando Camargo, 500, Centro, Americana – SP, CEP 13465-020.</p>
+    <div class="container footer-main">
+      <div>
+        <p class="footer-name">Ewerton Imóveis</p>
+        <p class="footer-meta">CRECI 177849-F</p>
+        <p class="footer-meta">Imóveis de médio e alto padrão, com atendimento próximo e conhecimento da região.</p>
+      </div>
+      <nav class="footer-navigation" aria-label="Navegação do rodapé">
+        <p class="footer-column-title">Navegação</p>
+        <a href="./index.html#inicio">Início</a>
+        <a href="./index.html#imoveis">Imóveis</a>
+        <a href="./index.html#diferenciais">Diferenciais</a>
+        <a href="./index.html#sobre">Sobre</a>
+        <a href="./index.html#contato">Contato</a>
+      </nav>
+      <div>
+        <p class="footer-column-title">Atuação regional</p>
+        <p>Americana<br>Santa Bárbara d'Oeste<br>Nova Odessa</p>
+        <p class="footer-meta"><strong>Endereço</strong><br>Rua Fernando Camargo, 500, Centro, Americana – SP, CEP 13465-020<br><span>endereço sujeito a confirmação</span></p>
+      </div>
+      <div>
+        <p class="footer-column-title">Atendimento</p>
+        <a class="footer-contact-link" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">WhatsApp (19) 99518-8676</a>
+        <a class="footer-contact-link" href="https://www.instagram.com/ewerton.imoveis/" target="_blank" rel="noopener noreferrer">Instagram @ewerton.imoveis</a>
+        <span class="footer-contact-link">E-mail: não informado</span>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="current-year"></span> Ewerton Imóveis · CRECI 177849-F</p>
+        <p>Prévia demonstrativa. Imóvel, valores, características e fotografias são ilustrativos.</p>
+        <a href="#top" class="back-to-top">Voltar ao topo</a>
+      </div>
     </div>
   </footer>
 
@@ -132,6 +159,8 @@
     <p class="lightbox-caption" id="lightbox-caption"></p>
   </div>
 
+  <script src="./js/supabase-config.js"></script>
+  <script src="./js/property-repository.js"></script>
   <script src="./js/imovel.js"></script>
 </body>
 </html>

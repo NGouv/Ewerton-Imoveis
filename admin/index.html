@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#142B49">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Administração | Ewerton Imóveis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css">
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/property-repository.js"></script>
+  <script src="../js/admin.js" defer></script>
+</head>
+<body>
+  <main class="auth-page" id="auth-page">
+    <section class="auth-card" aria-labelledby="login-title">
+      <a class="brand" href="../index.html">
+        <span class="brand-name">Ewerton Imóveis</span>
+        <span class="brand-caption">Área administrativa</span>
+      </a>
+      <p class="eyebrow">Acesso restrito</p>
+      <h1 id="login-title">Bem-vindo de volta.</h1>
+      <p class="muted">Entre com a conta administrativa autorizada.</p>
+      <div class="notice notice--warning" id="setup-notice" hidden></div>
+      <form id="login-form">
+        <label class="field">
+          <span>E-mail</span>
+          <input name="email" type="email" autocomplete="username" required>
+        </label>
+        <label class="field">
+          <span>Senha</span>
+          <span class="password-field">
+            <input name="password" type="password" autocomplete="current-password" required>
+            <button type="button" class="password-toggle" id="password-toggle" aria-label="Mostrar senha">Mostrar</button>
+          </span>
+        </label>
+        <p class="form-message" id="login-message" role="alert"></p>
+        <button class="button button--primary button--full" id="login-button" type="submit">Entrar</button>
+      </form>
+      <p class="auth-footnote">O cadastro de contas é restrito e deve ser feito no Supabase.</p>
+    </section>
+  </main>
+
+  <div class="app-shell" id="app-shell" hidden>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand brand--sidebar" href="../index.html">
+        <span class="brand-name">Ewerton Imóveis</span>
+        <span class="brand-caption">Painel administrativo</span>
+      </a>
+      <nav class="side-nav" aria-label="Menu administrativo">
+        <button class="nav-item is-active" data-view="dashboard" type="button"><span class="nav-icon">⌂</span>Visão geral</button>
+        <button class="nav-item" data-view="properties" type="button"><span class="nav-icon">▤</span>Imóveis</button>
+        <button class="nav-item" data-view="settings" type="button"><span class="nav-icon">⚙</span>Configurações</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="public-link" href="../index.html" target="_blank" rel="noopener noreferrer">Abrir site público ↗</a>
+        <div class="account-row">
+          <span class="avatar" id="account-avatar">EI</span>
+          <span class="account-copy"><strong id="account-email">Conta</strong><small>Administrador</small></span>
+          <button class="icon-button" id="logout-button" type="button" aria-label="Sair">↪</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="mobile-menu" type="button" aria-label="Abrir menu">☰</button>
+        <div class="topbar-title"><span class="eyebrow">EWERTON IMÓVEIS</span><strong id="page-title">Visão geral</strong></div>
+        <a class="button button--outline" href="../index.html" target="_blank" rel="noopener noreferrer">Ver site ↗</a>
+      </header>
+
+      <section class="view-panel" id="view-dashboard">
+        <div class="page-heading">
+          <div><p class="eyebrow">Resumo do negócio</p><h1>Visão geral</h1><p class="muted">Acompanhe os imóveis cadastrados no seu catálogo.</p></div>
+          <button class="button button--primary" data-action="new-property" type="button">＋ Cadastrar imóvel</button>
+        </div>
+        <div class="setup-banner" id="pending-banner"><span class="setup-mark">!</span><div><strong>Integração Supabase pendente</strong><p>Configure a URL e a chave pública do projeto e cadastre a conta autorizada para habilitar o painel.</p><button class="text-button" data-view-link="settings" type="button">Ver instruções de configuração →</button></div></div>
+        <div class="metrics-grid">
+          <article class="metric-card"><span class="metric-label">Total de imóveis</span><strong class="metric-value" id="count-total">—</strong><span class="metric-note">Registros do catálogo</span></article>
+          <article class="metric-card"><span class="metric-label">Disponíveis</span><strong class="metric-value" id="count-available">—</strong><span class="metric-note">Prontos para divulgação</span></article>
+          <article class="metric-card"><span class="metric-label">Vendidos</span><strong class="metric-value" id="count-sold">—</strong><span class="metric-note">Status atualizado</span></article>
+          <article class="metric-card"><span class="metric-label">Alugados</span><strong class="metric-value" id="count-rented">—</strong><span class="metric-note">Status atualizado</span></article>
+        </div>
+        <section class="panel-card quick-panel">
+          <div><p class="eyebrow">Comece por aqui</p><h2>Acesso rápido</h2><p class="muted">Gerencie os anúncios e as informações que aparecem no site.</p></div>
+          <div class="quick-actions"><button class="quick-action" data-action="new-property" type="button"><span>＋</span><strong>Novo imóvel</strong><small>Adicionar ao catálogo</small></button><button class="quick-action" data-view-link="properties" type="button"><span>▤</span><strong>Ver imóveis</strong><small>Pesquisar e editar anúncios</small></button><button class="quick-action" data-view-link="settings" type="button"><span>⚙</span><strong>Configurações</strong><small>Conexão e perfil</small></button></div>
+        </section>
+        <section class="panel-card recent-panel"><div class="section-title"><div><p class="eyebrow">Atualizações</p><h2>Imóveis recentes</h2></div><button class="text-button" data-view-link="properties" type="button">Ver todos →</button></div><div id="recent-properties" class="empty-state">Os dados reais serão exibidos após conectar o Supabase.</div></section>
+      </section>
+
+      <section class="view-panel" id="view-properties" hidden>
+        <div class="page-heading"><div><p class="eyebrow">Catálogo</p><h1>Imóveis</h1><p class="muted">Pesquise, atualize e organize os anúncios do site.</p></div><button class="button button--primary" data-action="new-property" type="button">＋ Cadastrar imóvel</button></div>
+        <div class="panel-card listing-panel">
+          <div class="filters-row">
+            <label class="search-field"><span class="visually-hidden">Pesquisar imóveis</span><span aria-hidden="true">⌕</span><input id="property-search" type="search" placeholder="Buscar por título, cidade ou bairro"></label>
+            <select id="filter-type" aria-label="Filtrar por tipo"><option value="">Todos os tipos</option><option>Apartamento</option><option>Casa</option><option>Terreno</option><option>Comercial</option><option>Outro</option></select>
+            <select id="filter-purpose" aria-label="Filtrar por finalidade"><option value="">Todas as finalidades</option><option value="sale">Venda</option><option value="rent">Aluguel</option></select>
+            <select id="filter-status" aria-label="Filtrar por status"><option value="">Todos os status</option><option value="available">Disponível</option><option value="sold">Vendido</option><option value="rented">Alugado</option></select>
+          </div>
+          <div class="table-wrap"><table class="property-table"><thead><tr><th>Imóvel</th><th>Finalidade</th><th>Preço</th><th>Status</th><th>Cadastro</th><th><span class="visually-hidden">Ações</span></th></tr></thead><tbody id="property-rows"><tr><td colspan="6" class="table-empty">A listagem real aparece quando o Supabase estiver conectado.</td></tr></tbody></table></div>
+          <p class="list-count" id="list-count"></p>
+        </div>
+      </section>
+
+      <section class="view-panel" id="view-form" hidden>
+        <div class="page-heading"><div><p class="eyebrow">Catálogo</p><h1 id="form-heading">Cadastrar imóvel</h1><p class="muted">Preencha as informações do anúncio. Campos opcionais podem ficar vazios.</p></div><button class="button button--outline" data-action="cancel-form" type="button">← Voltar aos imóveis</button></div>
+        <form id="property-form" class="property-form">
+          <div class="form-column">
+            <section class="panel-card form-section"><div class="section-title"><div><p class="eyebrow">01 · Anúncio</p><h2>Informações gerais</h2></div></div>
+              <div class="form-grid">
+                <label class="field field--wide"><span>Título <i>*</i></span><input name="title" maxlength="160" required placeholder="Ex.: Apartamento com sacada gourmet"></label>
+                <label class="field field--wide"><span>Descrição</span><textarea name="description" rows="5" placeholder="Descreva os detalhes do imóvel"></textarea></label>
+                <label class="field"><span>Tipo de imóvel <i>*</i></span><select name="property_type" required><option value="">Selecione</option><option>Apartamento</option><option>Casa</option><option>Terreno</option><option>Comercial</option><option>Outro</option></select></label>
+                <label class="field"><span>Finalidade <i>*</i></span><select name="purpose" required><option value="sale">Venda</option><option value="rent">Aluguel</option></select></label>
+                <label class="field"><span>Status <i>*</i></span><select name="status" required><option value="available">Disponível</option><option value="sold">Vendido</option><option value="rented">Alugado</option></select></label>
+              </div>
+            </section>
+            <section class="panel-card form-section"><div class="section-title"><div><p class="eyebrow">02 · Valores</p><h2>Valores do imóvel</h2></div></div><div class="form-grid">
+              <label class="field"><span>Preço (R$) <i>*</i></span><input name="price" type="number" min="0" step="0.01" required placeholder="0,00"></label><label class="field"><span>Condomínio mensal (R$)</span><input name="condo_fee" type="number" min="0" step="0.01" placeholder="Opcional"></label><label class="field"><span>IPTU anual (R$)</span><input name="property_tax" type="number" min="0" step="0.01" placeholder="Opcional"></label>
+            </div></section>
+            <section class="panel-card form-section"><div class="section-title"><div><p class="eyebrow">03 · Localização</p><h2>Endereço</h2></div></div><div class="form-grid">
+              <label class="field"><span>CEP</span><input name="postal_code" autocomplete="postal-code" maxlength="12"></label><label class="field"><span>Estado</span><input name="state" maxlength="2" placeholder="SP"></label><label class="field"><span>Cidade</span><input name="city" autocomplete="address-level2"></label><label class="field"><span>Bairro</span><input name="neighborhood"></label><label class="field field--wide"><span>Endereço</span><input name="address" autocomplete="street-address"></label><label class="field"><span>Número</span><input name="street_number"></label><label class="field"><span>Complemento</span><input name="complement"></label>
+            </div></section>
+            <section class="panel-card form-section"><div class="section-title"><div><p class="eyebrow">04 · Características</p><h2>Dimensões e ambientes</h2></div></div><div class="form-grid">
+              <label class="field"><span>Área total (m²)</span><input name="total_area" type="number" min="0" step="0.01"></label><label class="field"><span>Área privativa (m²)</span><input name="private_area" type="number" min="0" step="0.01"></label><label class="field"><span>Quartos</span><input name="bedrooms" type="number" min="0" step="1"></label><label class="field"><span>Suítes</span><input name="suites" type="number" min="0" step="1"></label><label class="field"><span>Banheiros</span><input name="bathrooms" type="number" min="0" step="1"></label><label class="field"><span>Vagas</span><input name="parking_spaces" type="number" min="0" step="1"></label>
+            </div></section>
+            <section class="panel-card form-section"><div class="section-title"><div><p class="eyebrow">05 · Diferenciais</p><h2>Comodidades</h2></div></div><div class="feature-options">
+              <label><input type="checkbox" name="features" value="Varanda">Varanda</label><label><input type="checkbox" name="features" value="Piscina">Piscina</label><label><input type="checkbox" name="features" value="Academia">Academia</label><label><input type="checkbox" name="features" value="Elevador">Elevador</label><label><input type="checkbox" name="features" value="Área gourmet">Área gourmet</label><label><input type="checkbox" name="features" value="Ar-condicionado">Ar-condicionado</label>
+            </div><label class="field field--wide custom-features"><span>Outros diferenciais <small>Separe os itens com vírgula</small></span><input name="other_features" placeholder="Ex.: portaria 24h, móveis planejados"></label></section>
+            <section class="panel-card form-section"><div class="section-title"><div><p class="eyebrow">06 · Fotografias</p><h2>Capa e galeria</h2><p class="muted">Selecione imagens, escolha a capa e ajuste a ordem antes de salvar.</p></div></div>
+              <label class="upload-zone" for="image-files"><span class="upload-plus">＋</span><strong>Adicionar imagens</strong><small>JPG, PNG ou WebP · até 8 MB cada</small></label><input id="image-files" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+              <div class="image-list" id="image-list"><p class="muted">Nenhuma imagem selecionada.</p></div>
+            </section>
+            <div class="form-actions"><p class="form-message" id="form-message" role="alert"></p><button class="button button--outline" data-action="cancel-form" type="button">Cancelar</button><button class="button button--primary" id="save-property" type="submit">Salvar imóvel</button></div>
+          </div>
+          <aside class="form-aside"><div class="panel-card publish-card"><p class="eyebrow">Publicação</p><h2>Visibilidade no site</h2><p class="muted">Ao salvar, o anúncio ficará disponível no catálogo público. Imóveis vendidos ou alugados podem continuar visíveis com o status correspondente.</p><p class="publish-status"><span class="status-dot"></span> A integração com o Supabase está pendente</p></div></aside>
+        </form>
+      </section>
+
+      <section class="view-panel" id="view-settings" hidden>
+        <div class="page-heading"><div><p class="eyebrow">Painel</p><h1>Configurações</h1><p class="muted">Finalize a conexão com seu banco de dados e gerencie sua conta.</p></div></div>
+        <div class="settings-grid">
+          <section class="panel-card settings-card"><p class="eyebrow">Conexão</p><h2>Supabase</h2><p class="muted">As credenciais ficam no arquivo de configuração do site. A chave pública é destinada ao navegador; nunca coloque chaves secretas no frontend.</p><div class="connection-state" id="connection-state"><span class="connection-dot"></span><span>Configuração pendente</span></div><div class="setup-steps"><h3>Para habilitar o painel</h3><ol><li>Crie um projeto Supabase e copie a Project URL e a chave <strong>anon/public</strong>.</li><li>Preencha <code>SUPABASE_URL</code> e <code>SUPABASE_ANON_KEY</code> em <code>js/supabase-config.js</code>.</li><li>Execute <code>supabase/migrations/202611240001_admin_properties.sql</code> no SQL Editor do Supabase.</li><li>Crie o usuário em <strong>Authentication → Users</strong> no Dashboard do Supabase.</li><li>Copie o UUID desse usuário e adicione-o à tabela <code>public.admin_users</code> pelo SQL Editor (instruções no arquivo da migration).</li><li>Publique o site num servidor HTTPS; o login não funciona abrindo o HTML via <code>file://</code>.</li></ol></div><p class="notice notice--warning">Até concluir esses passos, não há login, dados ou operações simuladas. A área administrativa permanece bloqueada.</p></section>
+          <section class="panel-card settings-card"><p class="eyebrow">Perfil da sessão</p><h2>Conta autorizada</h2><p class="muted">O perfil será carregado da sessão autenticada do Supabase.</p><div class="profile-detail"><span>E-mail</span><strong id="settings-email">Não conectado</strong></div><div class="profile-detail"><span>Autorização</span><strong>Administrador Supabase</strong></div></section>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+</body>
+</html>

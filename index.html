@@ -102,7 +102,10 @@
           <button class="button button--gold quick-search-button" type="submit">Buscar</button>
         </form>
       </div>
-      <span class="scroll-cue" aria-hidden="true">Role para descobrir</span>
+      <span class="scroll-cue" aria-hidden="true">
+        Role para descobrir
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m-6-6 6 6 6-6"></path></svg>
+      </span>
     </section>
 
     <!-- Vitrine com exemplos demonstrativos -->
@@ -117,19 +120,7 @@
         <p class="notice reveal">Imóveis exibidos como exemplos ilustrativos de apresentação. Valores, características e imagens não correspondem a anúncios reais disponíveis.</p>
 
         <div class="property-carousel">
-          <div class="carousel-controls" aria-label="Controles do catálogo">
-            <button class="carousel-button carousel-button--previous" type="button" aria-label="Ver imóvel anterior" aria-controls="property-track" disabled>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="m15 18-6-6 6-6"></path>
-              </svg>
-            </button>
-            <button class="carousel-button carousel-button--next" type="button" aria-label="Ver próximo imóvel" aria-controls="property-track">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </button>
-          </div>
-          <div class="property-grid" id="property-track" aria-label="Imóveis demonstrativos" aria-roledescription="carrossel">
+          <div class="property-grid" id="property-track" aria-label="Imóveis demonstrativos">
           <article class="property-card reveal" role="link" tabindex="0" data-href="./imovel.html?id=apartamento-sacada-gourmet" data-city="Santa Barbara d'Oeste" data-type="Apartamento" data-price="300-500" aria-label="Ver detalhes: Apartamento com sacada gourmet">
             <div class="property-image-wrap">
               <img class="property-image" src="./assets/img/imoveis/imovel-1/sala-estar.jpg" alt="Imagem ilustrativa de apartamento com sala integrada e sacada gourmet" loading="lazy">
@@ -205,6 +196,11 @@
             </div>
           </article>
           </div>
+          <nav class="pagination" id="property-pagination" aria-label="Paginação dos imóveis">
+            <button class="pagination-button" id="page-previous" type="button" aria-label="Página anterior" disabled>Anterior</button>
+            <div class="pagination-pages" id="pagination-pages" aria-live="polite"></div>
+            <button class="pagination-button pagination-button--next" id="page-next" type="button" aria-label="Próxima página" disabled>Próximo</button>
+          </nav>
           <p class="visually-hidden carousel-status" aria-live="polite"></p>
         </div>
       </div>
@@ -220,6 +216,7 @@
 
         <div class="advantages-grid">
           <article class="advantage reveal">
+            <span class="advantage-number" aria-hidden="true">01</span>
             <span class="advantage-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 11.5a7.5 7.5 0 0 1-11.2 6.5L4 19l1-4.1A7.5 7.5 0 1 1 20 11.5Z"></path>
@@ -231,6 +228,7 @@
           </article>
 
           <article class="advantage reveal">
+            <span class="advantage-number" aria-hidden="true">02</span>
             <span class="advantage-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"></path>
@@ -242,6 +240,7 @@
           </article>
 
           <article class="advantage reveal">
+            <span class="advantage-number" aria-hidden="true">03</span>
             <span class="advantage-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10Z"></path>
@@ -302,10 +301,10 @@
           <div class="contact-action">
             <p>Conte o que você procura e receba um atendimento personalizado para encontrar opções que façam sentido para você.</p>
             <div class="objective-chips" role="group" aria-label="Objetivo do contato">
-              <button class="objective-chip" type="button" data-objective="comprar">Comprar</button>
-              <button class="objective-chip" type="button" data-objective="alugar">Alugar</button>
-              <button class="objective-chip" type="button" data-objective="vender">Vender</button>
-              <button class="objective-chip" type="button" data-objective="outro">Outro</button>
+              <button class="objective-chip" type="button" data-objective="comprar" aria-pressed="false">Comprar</button>
+              <button class="objective-chip" type="button" data-objective="alugar" aria-pressed="false">Alugar</button>
+              <button class="objective-chip" type="button" data-objective="vender" aria-pressed="false">Vender</button>
+              <button class="objective-chip" type="button" data-objective="outro" aria-pressed="false">Outro</button>
             </div>
             <a class="button button--gold contact-whatsapp" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20um%20im%C3%B3vel." target="_blank" rel="noopener noreferrer">
               <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
@@ -323,27 +322,37 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-main">
-        <div>
+        <div class="footer-brand">
           <p class="footer-name">Ewerton Imóveis</p>
           <p class="footer-role">CRECI 177849-F</p>
+          <p class="footer-meta">Imóveis de médio e alto padrão, com atendimento próximo e conhecimento da região.</p>
+        </div>
+        <nav class="footer-navigation" aria-label="Navegação do rodapé">
+          <p class="footer-column-title">Navegação</p>
+          <a href="#inicio">Início</a>
+          <a href="#imoveis">Imóveis</a>
+          <a href="#diferenciais">Diferenciais</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#contato">Contato</a>
+        </nav>
+        <div class="footer-location">
+          <p class="footer-column-title">Atuação regional</p>
+          <p class="footer-meta">Americana<br>Santa Bárbara d'Oeste<br>Nova Odessa</p>
+          <p class="footer-meta"><strong>Endereço</strong><br>Rua Fernando Camargo, 500, Centro, Americana, SP, CEP 13465-020<br><span>endereço sujeito a confirmação</span></p>
+        </div>
+        <div class="footer-contact">
+          <p class="footer-column-title">Atendimento</p>
           <a class="footer-role" href="https://wa.me/5519995188676?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20um%20im%C3%B3vel." target="_blank" rel="noopener noreferrer">
             <svg class="whatsapp-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
               <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
             </svg>
             WhatsApp (19) 99518-8676
           </a>
-        </div>
-        <nav class="footer-navigation" aria-label="Navegação do rodapé">
-          <p class="footer-column-title">Navegação</p>
-          <a href="#imoveis">Imóveis</a>
-          <a href="#diferenciais">Diferenciais</a>
-          <a href="#sobre">Sobre</a>
-          <a href="#contato">Contato</a>
-          <a href="https://www.instagram.com/ewerton.imoveis/" target="_blank" rel="noopener noreferrer">@ewerton.imoveis</a>
-        </nav>
-        <div class="footer-location">
-          <p class="footer-meta"><strong>Atuação</strong><br>Americana, Santa Bárbara d'Oeste e Nova Odessa</p>
-          <p class="footer-meta"><strong>Endereço</strong><br>Rua Fernando Camargo, 500, Centro, Americana, SP, CEP 13465-020<br><span>endereço sujeito a confirmação</span></p>
+          <a class="footer-role footer-social" href="https://www.instagram.com/ewerton.imoveis/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg>
+            Instagram @ewerton.imoveis
+          </a>
+          <span class="footer-role footer-email-note">E-mail: não informado</span>
         </div>
       </div>
       <div class="footer-bottom">
@@ -360,6 +369,9 @@
     </svg>
   </a>
 
+  <script src="./js/supabase-config.js"></script>
+  <script src="./js/property-repository.js"></script>
+  <script src="./js/public-catalog.js"></script>
   <script src="./js/script.js"></script>
 </body>
 </html>

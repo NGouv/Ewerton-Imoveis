@@ -1,4 +1,22 @@
 // Os dados do catálogo ficam juntos; campos sem informação permanecem identificados.
+const imageFallback = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750"><rect width="1200" height="750" fill="#142B49"/><path d="M470 395h260l-130-110z" fill="none" stroke="#E6A817" stroke-width="8" stroke-linejoin="round"/><path d="M510 395v125h180V395M570 520v-85h60v85" fill="none" stroke="#E6A817" stroke-width="8" stroke-linejoin="round"/><text x="600" y="605" fill="#F4F3EF" font-family="Georgia,serif" font-size="35" text-anchor="middle">Ewerton Imóveis</text><text x="600" y="650" fill="#E6A817" font-family="Arial,sans-serif" font-size="18" letter-spacing="3" text-anchor="middle">CRECI 177849-F</text></svg>'
+)}`;
+
+function normalizeImageUrl(url) {
+  const source = String(url || "").trim();
+  if (/^data:image\//i.test(source)) return source;
+  if (!source) return imageFallback;
+
+  try {
+    const resolved = new URL(source, document.baseURI);
+    if (["http:", "https:", "file:"].includes(resolved.protocol)) return resolved.href;
+  } catch (error) {
+    return imageFallback;
+  }
+  return imageFallback;
+}
+
     const properties = {
       "apartamento-sacada-gourmet": {
         folder: "imovel-1",
@@ -117,8 +135,60 @@
       }
     };
 
-    (() => {
-      const property = properties[new URLSearchParams(window.location.search).get("id")];
+    (async () => {
+      const propertyId = new URLSearchParams(window.location.search).get("id");
+      let property = properties[propertyId];
+      let isRemoteProperty = false;
+      if (!property && window.PropertyRepository) {
+        try {
+          await window.PropertyRepository.ready;
+          const record = window.PropertyRepository.isConfigured
+            ? await window.PropertyRepository.getPublicProperty(propertyId)
+            : null;
+          if (record) {
+            isRemoteProperty = true;
+            const images = [...(record.property_images || [])]
+              .sort((a, b) => a.display_order - b.display_order);
+            const coverIndex = images.findIndex((image) => image.is_cover);
+            if (coverIndex > 0) images.unshift(images.splice(coverIndex, 1)[0]);
+            const statusName = { available: "DISPONÍVEL", sold: "VENDIDO", rented: "ALUGADO" }[record.status] || "IMÓVEL";
+            property = {
+              code: `${statusName} · ${record.id.slice(0, 8).toUpperCase()}`,
+              title: record.title,
+              location: [record.neighborhood, record.city, record.state].filter(Boolean).join(" · ") || "Localização não informada",
+              price: new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(record.price),
+              stats: [
+                [record.bedrooms ?? "Não informado", "dormitórios"],
+                [record.suites ?? "Não informado", "suítes"],
+                [record.bathrooms ?? "Não informado", "banheiros"],
+                [record.parking_spaces ?? "Não informado", "vagas"],
+                [record.private_area ? `${record.private_area} m²` : "Não informado", "área privativa"],
+                [record.total_area ? `${record.total_area} m²` : "Não informado", "área total"]
+              ],
+              description: record.description || "Descrição não informada.",
+              features: record.features || [],
+              condoTitle: "Custos e informações",
+              condo: [
+                record.condo_fee !== null ? `Condomínio mensal: ${new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(record.condo_fee)}` : null,
+                record.property_tax !== null ? `IPTU anual: ${new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(record.property_tax)}` : null,
+                `${record.property_type} · ${record.purpose === "rent" ? "Aluguel" : "Venda"}`
+              ].filter(Boolean),
+              gallery: images.length
+                ? images.map((image) => [
+                  window.PropertyRepository.publicImageUrl(image.storage_path),
+                  image.alt_text || "Fotografia do imóvel"
+                ])
+                : [[imageFallback, "Imagem não cadastrada"]]
+            };
+          }
+        } catch (error) {
+          const unavailable = document.querySelector("#not-found");
+          unavailable.hidden = false;
+          unavailable.querySelector("h1").textContent = `Não foi possível carregar este imóvel: ${error.message}`;
+          document.title = "Imóvel indisponível | Ewerton Imóveis";
+          return;
+        }
+      }
       const content = document.querySelector("#property-content");
       const notFound = document.querySelector("#not-found");
       document.querySelector("#current-year").textContent = String(new Date().getFullYear());
@@ -130,6 +200,13 @@
       }
 
       content.hidden = false;
+      if (isRemoteProperty) {
+        document.querySelector(".demo-notice").hidden = true;
+        document.querySelector(".property-heading .eyebrow").textContent = "Detalhes do imóvel";
+        document.querySelector(".gallery").setAttribute("aria-label", "Galeria de fotografias do imóvel");
+        document.querySelector(".summary-label").textContent = "Valor anunciado";
+        document.querySelector(".footer-bottom p:nth-child(2)").textContent = "Informações do imóvel sujeitas à confirmação.";
+      }
       document.title = `${property.title} | Ewerton Imóveis`;
       document.querySelector("#breadcrumb-title").textContent = property.title;
       document.querySelector("#property-title").textContent = property.title;
@@ -160,17 +237,28 @@
       addListItems(document.querySelector("#property-features"), property.features);
       addListItems(document.querySelector("#property-condo"), property.condo);
 
-      const gallery = property.gallery.map(([file, label]) => ({
-        src: `./assets/img/imoveis/${property.folder}/${file}`,
-        alt: `Imagem ilustrativa: ${label.toLocaleLowerCase("pt-BR")}`,
-        label
-      }));
+      const gallery = property.gallery.map(([file, label]) => {
+        const source = /^(https?:\/\/|data:image\/|\/|\.{1,2}\/|uploads\/|assets\/)/i.test(file)
+          ? file
+          : `./assets/img/imoveis/${property.folder}/${file}`;
+        return {
+          src: normalizeImageUrl(source),
+          alt: `Imagem ilustrativa: ${label.toLocaleLowerCase("pt-BR")}`,
+          label
+        };
+      });
       const mainPhoto = document.querySelector("#main-photo");
       const photoCount = document.querySelector("#photo-count");
       const photoCaption = document.querySelector("#photo-caption");
       const thumbnails = document.querySelector("#thumbnail-list");
       const lightbox = document.querySelector("#lightbox");
       const lightboxImage = document.querySelector("#lightbox-image");
+      [mainPhoto, lightboxImage].forEach((image) => {
+        image.addEventListener("error", () => {
+          image.classList.add("image-fallback");
+          image.src = imageFallback;
+        }, { once: true });
+      });
       let activeIndex = 0;
       let lightboxReturnFocus = null;
       let touchStartX = null;
@@ -182,9 +270,13 @@
         button.type = "button";
         button.setAttribute("aria-label", `Mostrar fotografia ${index + 1}: ${photo.label}`);
         button.setAttribute("aria-pressed", "false");
-        image.src = photo.src;
         image.alt = "";
         image.loading = "lazy";
+        image.addEventListener("error", () => {
+          image.classList.add("image-fallback");
+          image.src = imageFallback;
+        }, { once: true });
+        image.src = photo.src;
         button.append(image);
         button.addEventListener("click", () => showPhoto(index));
         thumbnails.append(button);

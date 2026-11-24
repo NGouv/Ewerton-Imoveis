@@ -7,13 +7,20 @@
       const hero = document.querySelector(".hero");
       const propertyTrack = document.querySelector("#property-track");
       const quickSearch = document.querySelector("#quick-search");
-      const carouselPrevious = document.querySelector(".carousel-button--previous");
-      const carouselNext = document.querySelector(".carousel-button--next");
+      const scrollCue = document.querySelector(".scroll-cue");
+      const pagination = document.querySelector("#property-pagination");
+      const paginationPages = document.querySelector("#pagination-pages");
+      const pagePrevious = document.querySelector("#page-previous");
+      const pageNext = document.querySelector("#page-next");
       const carouselStatus = document.querySelector(".carousel-status");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-      const propertyCards = [...propertyTrack.querySelectorAll(".property-card")];
+      let propertyCards = [...propertyTrack.querySelectorAll(".property-card")];
+      const pageSize = 6;
+      let matchingCards = propertyCards;
+      let currentPage = 1;
+      let activeFilters = { city: "", type: "", price: "" };
 
-      propertyCards.forEach((card) => {
+      const bindCardNavigation = (card) => {
         card.addEventListener("click", (event) => {
           if (event.target.closest("a, button")) return;
           window.location.href = card.dataset.href;
@@ -25,69 +32,95 @@
             window.location.href = card.dataset.href;
           }
         });
-      });
+      };
+      propertyCards.forEach(bindCardNavigation);
 
-      const getCarouselStep = () => {
-        const firstCard = propertyCards.find((card) => !card.hidden) || propertyCards[0];
-        const trackStyles = window.getComputedStyle(propertyTrack);
-        const gap = Number.parseFloat(trackStyles.columnGap) || 0;
-        return firstCard.getBoundingClientRect().width + gap;
+      const filterProperties = () => {
+        const normalize = (value) => String(value || "")
+          .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+          .toLocaleLowerCase("pt-BR").replace(/[^a-z0-9]+/g, " ").trim();
+        matchingCards = propertyCards.filter((card) => {
+          const matchesCity = !activeFilters.city || normalize(card.dataset.city) === normalize(activeFilters.city);
+          const matchesType = !activeFilters.type || card.dataset.type === activeFilters.type;
+          const matchesPrice = !activeFilters.price || card.dataset.price === activeFilters.price;
+          return matchesCity && matchesType && matchesPrice;
+        });
       };
 
-      const updateCarouselControls = () => {
-        const maxScroll = propertyTrack.scrollWidth - propertyTrack.clientWidth;
-        const visibleCards = propertyCards.filter((card) => !card.hidden);
-        carouselPrevious.disabled = propertyTrack.scrollLeft <= 2;
-        carouselNext.disabled = propertyTrack.scrollLeft >= maxScroll - 2;
-        const activeIndex = Math.min(
-          Math.max(0, visibleCards.length - 1),
-          Math.max(0, Math.round(propertyTrack.scrollLeft / getCarouselStep()))
-        );
-        if (visibleCards.length) {
-          carouselStatus.textContent = `Imóvel ${activeIndex + 1} de ${visibleCards.length}: ${visibleCards[activeIndex].querySelector(".property-title").textContent}`;
+      const renderPage = () => {
+        const pageCount = Math.max(1, Math.ceil(matchingCards.length / pageSize));
+        currentPage = Math.min(currentPage, pageCount);
+        const firstIndex = (currentPage - 1) * pageSize;
+        const lastIndex = Math.min(firstIndex + pageSize, matchingCards.length);
+        const visibleCards = new Set(matchingCards.slice(firstIndex, lastIndex));
+
+        propertyCards.forEach((card) => {
+          card.hidden = !visibleCards.has(card);
+        });
+
+        paginationPages.replaceChildren();
+        for (let page = 1; page <= pageCount; page += 1) {
+          const button = document.createElement("button");
+          button.className = "pagination-page";
+          button.type = "button";
+          button.textContent = String(page);
+          button.setAttribute("aria-label", `Página ${page}`);
+          if (page === currentPage) button.setAttribute("aria-current", "page");
+          button.addEventListener("click", () => goToPage(page));
+          paginationPages.append(button);
+        }
+
+        pagePrevious.disabled = currentPage === 1;
+        pageNext.disabled = currentPage === pageCount;
+        if (matchingCards.length) {
+          carouselStatus.textContent = `Exibindo imóveis ${firstIndex + 1} a ${lastIndex} de ${matchingCards.length}. Página ${currentPage} de ${pageCount}.`;
         } else {
           carouselStatus.textContent = "Nenhum imóvel corresponde aos filtros selecionados.";
         }
       };
 
-      const scrollCarousel = (direction) => {
-        propertyTrack.scrollBy({
-          left: getCarouselStep() * direction,
-          behavior: reducedMotion.matches ? "auto" : "smooth"
+      const goToPage = (page) => {
+        currentPage = page;
+        renderPage();
+        document.querySelector("#imoveis").scrollIntoView({
+          behavior: reducedMotion.matches ? "auto" : "smooth",
+          block: "start"
         });
       };
 
-      carouselPrevious.addEventListener("click", () => scrollCarousel(-1));
-      carouselNext.addEventListener("click", () => scrollCarousel(1));
-      propertyTrack.addEventListener("scroll", () => window.requestAnimationFrame(updateCarouselControls), { passive: true });
-      window.addEventListener("resize", updateCarouselControls);
-      updateCarouselControls();
+      pagePrevious.addEventListener("click", () => goToPage(currentPage - 1));
+      pageNext.addEventListener("click", () => goToPage(currentPage + 1));
+      renderPage();
 
       quickSearch.addEventListener("submit", (event) => {
         event.preventDefault();
-        const cidade = quickSearch.elements.cidade.value;
-        const tipo = quickSearch.elements.tipo.value;
-        const faixa = quickSearch.elements.preco.value;
-
-        propertyCards.forEach((card) => {
-          const matchesCity = !cidade || card.dataset.city === cidade;
-          const matchesType = !tipo || card.dataset.type === tipo;
-          const matchesPrice = !faixa || card.dataset.price === faixa;
-          card.hidden = !(matchesCity && matchesType && matchesPrice);
-        });
-
-        propertyTrack.scrollLeft = 0;
-        updateCarouselControls();
+        activeFilters = {
+          city: quickSearch.elements.cidade.value,
+          type: quickSearch.elements.tipo.value,
+          price: quickSearch.elements.preco.value
+        };
+        filterProperties();
+        currentPage = 1;
+        renderPage();
         document.querySelector("#imoveis").scrollIntoView({
           behavior: reducedMotion.matches ? "auto" : "smooth",
           block: "start"
         });
       });
 
+      document.addEventListener("ewerton:catalog-updated", () => {
+        propertyCards = [...propertyTrack.querySelectorAll(".property-card")];
+        propertyCards.forEach(bindCardNavigation);
+        filterProperties();
+        currentPage = 1;
+        renderPage();
+      });
+
       const updateScrollState = () => {
         const scrollY = window.scrollY;
         header.classList.toggle("is-scrolled", scrollY > 60);
         floatingWhatsApp.classList.toggle("is-visible", scrollY > hero.offsetHeight - 100);
+        scrollCue.classList.toggle("is-hidden", scrollY > 60);
       };
 
       updateScrollState();
@@ -140,21 +173,27 @@
 
       const updateContactWhatsapp = () => {
         const messageByObjective = {
-          comprar: "Olá! Quero comprar um imóvel.",
-          alugar: "Olá! Quero alugar um imóvel.",
-          vender: "Olá! Quero vender um imóvel.",
-          outro: "Olá! Gostaria de conversar sobre um imóvel."
+          comprar: "Olá Ewerton, gostaria de conversar sobre a compra de um imóvel em Americana/região.",
+          alugar: "Olá Ewerton, gostaria de conversar sobre o aluguel de um imóvel em Americana/região.",
+          vender: "Olá Ewerton, gostaria de conversar sobre a venda de um imóvel em Americana/região.",
+          outro: "Olá Ewerton, gostaria de conversar sobre um imóvel em Americana/região."
         };
-        const message = selectedObjective ? messageByObjective[selectedObjective] : "Olá! Gostaria de conversar sobre um imóvel.";
+        const message = selectedObjective ? messageByObjective[selectedObjective] : messageByObjective.outro;
         contactWhatsapp.href = `https://wa.me/5519995188676?text=${encodeURIComponent(message)}`;
       };
 
       objectiveChips.forEach((chip) => {
         chip.addEventListener("click", () => {
           const isSelected = chip.classList.contains("is-selected");
-          objectiveChips.forEach((item) => item.classList.remove("is-selected"));
+          objectiveChips.forEach((item) => {
+            item.classList.remove("is-selected");
+            item.setAttribute("aria-pressed", "false");
+          });
           selectedObjective = isSelected ? "" : chip.dataset.objective;
-          if (!isSelected) chip.classList.add("is-selected");
+          if (!isSelected) {
+            chip.classList.add("is-selected");
+            chip.setAttribute("aria-pressed", "true");
+          }
           updateContactWhatsapp();
         });
       });
