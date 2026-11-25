@@ -4,14 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#142B49">
-  <meta name="description" content="Veja a galeria e os detalhes demonstrativos deste imóvel da Ewerton Imóveis.">
+  <meta name="description" content="Confira os detalhes dos imóveis publicados pela Ewerton Imóveis.">
   <title>Detalhes do imóvel | Ewerton Imóveis</title>
 
-  <!--
-    PÁGINA DE DETALHES DEMONSTRATIVA
-    Troque as fotos em assets/img/imoveis/imovel-1, imovel-2 e imovel-3.
-    Os dados e imagens são exemplos de apresentação, não anúncios confirmados.
-  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
@@ -39,19 +34,18 @@
 
   <main class="page-main container" id="property-content" hidden>
     <p class="breadcrumb"><a href="./index.html#inicio">Início</a><span>/</span><a href="./index.html#imoveis">Imóveis</a><span>/</span><strong id="breadcrumb-title"></strong></p>
-    <p class="demo-notice">Prévia demonstrativa: imóvel, valores, características e fotografias são ilustrativos e não representam anúncio disponível.</p>
-
     <div class="property-heading">
       <div>
-        <p class="eyebrow">Detalhes do imóvel demonstrativo</p>
+        <p class="eyebrow">Detalhes do imóvel</p>
         <h1 class="property-title" id="property-title"></h1>
         <p class="property-location" id="property-location"></p>
+        <p class="property-type" id="property-type"></p>
       </div>
       <span class="property-code" id="property-code"></span>
     </div>
 
     <div class="detail-layout">
-      <section class="gallery" aria-label="Galeria de fotografias ilustrativas">
+      <section class="gallery" aria-label="Galeria de fotografias do imóvel">
         <div class="main-photo-wrap" id="gallery-swipe">
           <button class="main-photo-button" type="button" id="open-lightbox" aria-label="Ampliar fotografia atual">
             <img class="main-photo" id="main-photo" src="" alt="">
@@ -64,12 +58,13 @@
           </button>
           <span class="photo-caption" id="photo-caption"></span>
           <span class="photo-count" id="photo-count" aria-live="polite"></span>
+          <p class="photo-empty" id="photo-empty" hidden>Nenhuma fotografia cadastrada para este imóvel.</p>
         </div>
         <div class="thumbnail-list" id="thumbnail-list" role="group" aria-label="Selecionar fotografia"></div>
       </section>
 
       <aside class="property-summary" aria-label="Resumo do imóvel">
-        <p class="summary-label">Valor demonstrativo</p>
+        <p class="summary-label">Valor anunciado</p>
         <p class="property-price" id="property-price"></p>
         <div class="stats-grid" id="property-stats"></div>
         <a class="button whatsapp-cta" id="property-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">
@@ -82,6 +77,12 @@
       </aside>
     </div>
 
+    <section class="video-section" id="property-videos-section" aria-labelledby="videos-heading" hidden>
+      <h2 class="section-heading" id="videos-heading">Vídeos do imóvel</h2>
+      <div class="property-videos" id="property-videos"></div>
+      <p class="video-message" id="video-message" role="status" hidden></p>
+    </section>
+
     <div class="detail-sections">
       <div>
         <section class="detail-section" aria-labelledby="description-heading">
@@ -92,11 +93,11 @@
           <h2 class="section-heading" id="features-heading">Características e diferenciais</h2>
           <ul class="feature-list" id="property-features"></ul>
         </section>
+        <section class="detail-section" id="property-costs-section" aria-labelledby="costs-heading" hidden>
+          <h2 class="section-heading" id="costs-heading">Condomínio e IPTU</h2>
+          <ul class="feature-list" id="property-costs"></ul>
+        </section>
       </div>
-      <aside class="condo-card" id="condo-section">
-        <h2 class="section-heading" id="condo-heading"></h2>
-        <ul class="feature-list" id="property-condo"></ul>
-      </aside>
     </div>
   </main>
 
@@ -130,11 +131,10 @@
         <p class="footer-column-title">Atendimento</p>
         <a class="footer-contact-link" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">WhatsApp (19) 99518-8676</a>
         <a class="footer-contact-link" href="https://www.instagram.com/ewerton.imoveis/" target="_blank" rel="noopener noreferrer">Instagram @ewerton.imoveis</a>
-        <span class="footer-contact-link">E-mail: não informado</span>
       </div>
       <div class="footer-bottom">
         <p>© <span id="current-year"></span> Ewerton Imóveis · CRECI 177849-F</p>
-        <p>Prévia demonstrativa. Imóvel, valores, características e fotografias são ilustrativos.</p>
+        <p>Informações sujeitas à confirmação.</p>
         <a href="#top" class="back-to-top">Voltar ao topo</a>
       </div>
     </div>
@@ -161,6 +161,7 @@
 
   <script src="./js/supabase-config.js"></script>
   <script src="./js/property-repository.js"></script>
+  <script src="./js/property-videos.js"></script>
   <script src="./js/imovel.js"></script>
 </body>
 </html>

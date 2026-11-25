@@ -13,6 +13,7 @@
       const pagePrevious = document.querySelector("#page-previous");
       const pageNext = document.querySelector("#page-next");
       const carouselStatus = document.querySelector(".carousel-status");
+      const emptyState = document.querySelector("#catalog-empty");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       let propertyCards = [...propertyTrack.querySelectorAll(".property-card")];
       const pageSize = 6;
@@ -57,6 +58,13 @@
         propertyCards.forEach((card) => {
           card.hidden = !visibleCards.has(card);
         });
+        if (emptyState) {
+          emptyState.hidden = matchingCards.length > 0;
+          if (!matchingCards.length && propertyCards.length) {
+            emptyState.textContent = "Nenhum imóvel corresponde aos filtros selecionados.";
+          }
+        }
+        pagination.hidden = matchingCards.length <= pageSize;
 
         paginationPages.replaceChildren();
         for (let page = 1; page <= pageCount; page += 1) {

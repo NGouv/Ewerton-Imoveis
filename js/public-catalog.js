@@ -2,6 +2,8 @@
   const repository = window.PropertyRepository;
   const track = document.querySelector("#property-track");
   if (!repository || !track) return;
+  const emptyState = document.querySelector("#catalog-empty");
+  const errorState = document.querySelector("#catalog-error");
 
   const normalize = (value) => String(value || "")
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -108,33 +110,31 @@
       const properties = await repository.listPublicProperties();
       const published = properties.filter((property) => property.is_published);
       const quickSearch = document.querySelector("#quick-search");
-      const sampleCards = [...track.querySelectorAll(".property-card")];
       published.forEach((property) => {
         addOption(quickSearch.elements.cidade, property.city, property.city);
         addOption(quickSearch.elements.tipo, property.property_type, property.property_type);
         track.append(makeCard(property));
       });
-      if (published.length) {
-        sampleCards.forEach((card) => {
-          const label = document.createElement("span");
-          label.className = "catalog-tag catalog-tag--sample";
-          label.textContent = "Exemplo";
-          card.querySelector(".property-image-wrap").append(label);
-        });
-        track.setAttribute("aria-label", "Imóveis publicados e exemplos demonstrativos");
-        const notice = document.querySelector(".notice");
-        if (notice) notice.textContent = "Os anúncios publicados abaixo refletem os dados cadastrados. Exemplos de apresentação são identificados separadamente.";
-      }
+      if (!published.length) emptyState.textContent = "No momento, não há imóveis publicados. Entre em contato para receber atendimento.";
+      errorState.hidden = true;
       document.dispatchEvent(new CustomEvent("ewerton:catalog-updated"));
     } catch (error) {
-      const status = document.querySelector(".carousel-status");
-      if (status) status.textContent = `Não foi possível carregar os anúncios publicados: ${error.message}`;
+      emptyState.hidden = true;
+      errorState.hidden = false;
+      errorState.textContent = `Não foi possível carregar os imóveis publicados: ${error.message}`;
     }
   };
   repository.ready
-    .then((configured) => configured ? appendCatalog() : null)
+    .then((configured) => {
+      if (configured) return appendCatalog();
+      emptyState.hidden = true;
+      errorState.hidden = false;
+      errorState.textContent = "O catálogo está temporariamente indisponível. Tente novamente mais tarde.";
+      return null;
+    })
     .catch((error) => {
-      const status = document.querySelector(".carousel-status");
-      if (status) status.textContent = `Não foi possível iniciar os anúncios publicados: ${error.message}`;
+      emptyState.hidden = true;
+      errorState.hidden = false;
+      errorState.textContent = `Não foi possível iniciar o catálogo: ${error.message}`;
     });
 })();

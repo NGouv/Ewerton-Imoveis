@@ -2,6 +2,11 @@
   const config = window.SUPABASE_CONFIG || {};
   const hasConfig = Boolean(config.url && config.anonKey);
   let client = null;
+  let videoSchemaAvailable = null;
+  const missingVideoTable = (error) => error?.code === "PGRST205" ||
+    error?.code === "42P01" ||
+    /property_videos.*(not exist|schema cache)|could not find.*property_videos/i.test(error?.message || "");
+  const videoMigrationMessage = "O cadastro de vídeos requer a migration supabase/migrations/202611240002_property_videos.sql.";
   const ready = (async () => {
     if (!hasConfig) return false;
     if (!window.supabase) {
@@ -21,7 +26,7 @@
         detectSessionInUrl: true,
         storage: window.sessionStorage
       }
-    })
+    });
     return true;
   })();
 
@@ -34,10 +39,28 @@
     if (error) throw error;
     return data;
   };
+  const ensureVideoSchema = async () => {
+    if (videoSchemaAvailable === null) {
+      videoSchemaAvailable = await window.PropertyRepository.checkVideoSchema();
+    }
+    if (!videoSchemaAvailable) throw new Error(videoMigrationMessage);
+  };
 
   window.PropertyRepository = Object.freeze({
     ready,
     get isConfigured() { return Boolean(client); },
+    get hasVideoSchema() { return videoSchemaAvailable; },
+    isMissingVideoTable: missingVideoTable,
+    async checkVideoSchema() {
+      try {
+        unwrap(await ensureClient().from("property_videos").select("id").limit(1));
+        videoSchemaAvailable = true;
+      } catch (error) {
+        if (!missingVideoTable(error)) throw error;
+        videoSchemaAvailable = false;
+      }
+      return videoSchemaAvailable;
+    },
     auth: {
       async signIn(email, password) {
         const { data, error } = await ensureClient().auth.signInWithPassword({ email, password });
@@ -85,11 +108,45 @@
         .eq("is_published", true)
         .maybeSingle());
     },
-    async saveProperty(property, imageItems) {
+    async listAdminVideos(propertyId) {
+      await ensureVideoSchema();
+      return unwrap(await ensureClient()
+        .from("property_videos")
+        .select("*")
+        .eq("property_id", propertyId)
+        .order("display_order", { ascending: true }));
+    },
+    async listPublicVideos(propertyId) {
+      const { data, error } = await ensureClient()
+        .from("property_videos")
+        .select("id,url,platform,display_order")
+        .eq("property_id", propertyId)
+        .order("display_order", { ascending: true });
+      if (error && missingVideoTable(error)) throw new Error(videoMigrationMessage);
+      return unwrap({ data, error });
+    },
+    async saveProperty(property, imageItems, videoItems) {
       const supabase = ensureClient();
       const propertyId = property.id || crypto.randomUUID();
       const uploadedPaths = [];
       let imageRowsSaved = false;
+      let existingVideos = [];
+      let validatedVideos = [];
+
+      if (videoItems !== undefined) {
+        await ensureVideoSchema();
+        existingVideos = await this.listAdminVideos(propertyId);
+        validatedVideos = videoItems.map((video, index) => {
+          const parsed = window.PropertyVideos.parse(video.url);
+          return {
+            id: video.id || crypto.randomUUID(),
+            property_id: propertyId,
+            url: parsed.url,
+            platform: parsed.platform,
+            display_order: index
+          };
+        });
+      }
 
       try {
         const images = [];
@@ -142,6 +199,19 @@
         }
         if (images.length) unwrap(await supabase.from("property_images").upsert(images));
         imageRowsSaved = true;
+
+        if (videoItems !== undefined) {
+          if (validatedVideos.length) {
+            unwrap(await supabase.from("property_videos").upsert(validatedVideos));
+          }
+          const retainedIds = new Set(validatedVideos.map((video) => video.id));
+          const removedIds = existingVideos
+            .filter((video) => !retainedIds.has(video.id))
+            .map((video) => video.id);
+          if (removedIds.length) {
+            unwrap(await supabase.from("property_videos").delete().in("id", removedIds));
+          }
+        }
 
         if (property.removedImages?.length) {
           const pathsToRemove = property.removedImages.map((image) => image.storage_path);

@@ -85,11 +85,12 @@
       font-family: var(--heading);
       font-size: 1.18rem;
       font-weight: 600;
+      color: #FFFFFF;
     }
 
     .brand-credential {
       margin-top: 4px;
-      color: var(--gray);
+      color: var(--champagne-light);
       font-size: .63rem;
       letter-spacing: .08em;
       text-transform: uppercase;
@@ -161,18 +162,9 @@
       color: var(--champagne);
     }
 
-    .demo-notice {
-      margin: 0 0 30px;
-      padding: 11px 15px;
-      border-left: 2px solid var(--champagne);
-      background: var(--off-white);
-      color: var(--graphite);
-      font-size: .75rem;
-      line-height: 1.55;
-    }
-
     .property-heading {
       display: flex;
+      min-width: 0;
       align-items: flex-end;
       justify-content: space-between;
       gap: 24px;
@@ -216,6 +208,12 @@
       font-size: .78rem;
     }
 
+    .property-type {
+      margin: 9px 0 0;
+      color: var(--gray);
+      font-size: .76rem;
+    }
+
     .property-code {
       flex: 0 0 auto;
       padding: 7px 10px;
@@ -239,6 +237,8 @@
 
     .main-photo-wrap {
       position: relative;
+      display: grid;
+      place-items: center;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 4px;
@@ -261,6 +261,18 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .photo-empty {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      margin: 0;
+      padding: 24px;
+      color: var(--gray);
+      font-size: .9rem;
+      text-align: center;
     }
 
     .image-fallback {
@@ -377,9 +389,7 @@
       padding: 24px;
       border: 1px solid rgba(184, 149, 91, .25);
       border-radius: 4px;
-      background:
-        radial-gradient(ellipse at 100% 0%, rgba(230, 168, 23, .10), transparent 50%),
-        var(--graphite-light);
+      background: var(--graphite-light);
     }
 
     .summary-label {
@@ -447,9 +457,17 @@
       text-align: center;
     }
 
+    .video-section {
+      margin-top: 36px;
+    }
+
+    .property-video-card {
+      padding: 12px;
+    }
+
     .detail-sections {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(260px, .8fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: 48px;
       margin-top: 68px;
     }
@@ -473,6 +491,7 @@
       color: var(--graphite);
       font-size: .9rem;
       line-height: 1.8;
+      white-space: pre-line;
     }
 
     .feature-list {
@@ -694,6 +713,59 @@
         gap: 30px;
       }
 
+      .video-section {
+        margin-top: 48px;
+      }
+
+      .property-videos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+        gap: 18px;
+      }
+
+      .property-video-card {
+        min-width: 0;
+        overflow: hidden;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #FFFFFF;
+      }
+
+      .property-video-card h3 {
+        margin: 0 0 12px;
+        color: var(--navy);
+        font-size: .88rem;
+        font-weight: 600;
+      }
+
+      .property-video-card iframe,
+      .property-video-card video {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: 0;
+        background: #111111;
+      }
+
+      .property-video-card a {
+        display: inline-flex;
+        min-height: 40px;
+        align-items: center;
+        margin-top: 8px;
+        color: var(--navy);
+        font-size: .76rem;
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .video-link-note,
+      .video-message {
+        color: var(--gray);
+        font-size: .8rem;
+      }
+
       .site-footer .footer-main {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -734,17 +806,20 @@
         height: 18px;
       }
 
+      .property-heading {
+        align-items: center;
+      }
+
+      .property-title {
+        font-size: clamp(1.8rem, 8vw, 2.6rem);
+      }
+
       .page-main {
         padding-top: 24px;
       }
 
       .breadcrumb {
         margin-bottom: 20px;
-        text-align: center;
-      }
-
-      .demo-notice {
-        padding-inline: 12px;
         text-align: center;
       }
 
@@ -795,7 +870,6 @@
       }
 
       .detail-sections {
-        grid-template-columns: minmax(0, 1fr);
         gap: 32px;
         margin-top: 48px;
         text-align: center;
@@ -853,6 +927,24 @@
 
       .lightbox .photo-control--next {
         right: 8px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .header-inner {
+        gap: 10px;
+      }
+
+      .brand-name {
+        font-size: 1.05rem;
+      }
+
+      .back-link {
+        display: none;
+      }
+
+      .header-actions .button {
+        padding-inline: 9px;
       }
     }
 

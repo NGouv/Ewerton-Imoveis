@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/admin.css">
   <script src="../js/supabase-config.js"></script>
   <script src="../js/property-repository.js"></script>
+  <script src="../js/property-videos.js"></script>
   <script src="../js/admin.js" defer></script>
 </head>
 <body>
@@ -134,16 +135,22 @@
               <label class="upload-zone" for="image-files"><span class="upload-plus">＋</span><strong>Adicionar imagens</strong><small>JPG, PNG ou WebP · até 8 MB cada</small></label><input id="image-files" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
               <div class="image-list" id="image-list"><p class="muted">Nenhuma imagem selecionada.</p></div>
             </section>
+            <section class="panel-card form-section"><div class="section-title"><div><p class="eyebrow">07 · Vídeos</p><h2>Vídeos do imóvel</h2><p class="muted">Adicione links públicos do YouTube, Instagram, TikTok, Vimeo ou vídeos MP4/WebM/OGG.</p></div></div>
+              <p class="notice notice--warning" id="video-migration-notice" hidden></p>
+              <div class="video-form-row"><label class="field"><span>Link do vídeo</span><input id="video-url" type="url" inputmode="url" placeholder="https://..." autocomplete="url"></label><button class="button button--outline" id="add-video" type="button">Adicionar vídeo</button><button class="text-button" id="cancel-video-edit" type="button" hidden>Cancelar edição</button></div>
+              <p class="form-message" id="video-message" role="alert"></p>
+              <div class="video-list" id="video-list"><p class="muted">Nenhum vídeo adicionado.</p></div>
+            </section>
             <div class="form-actions"><p class="form-message" id="form-message" role="alert"></p><button class="button button--outline" data-action="cancel-form" type="button">Cancelar</button><button class="button button--primary" id="save-property" type="submit">Salvar imóvel</button></div>
           </div>
-          <aside class="form-aside"><div class="panel-card publish-card"><p class="eyebrow">Publicação</p><h2>Visibilidade no site</h2><p class="muted">Ao salvar, o anúncio ficará disponível no catálogo público. Imóveis vendidos ou alugados podem continuar visíveis com o status correspondente.</p><p class="publish-status"><span class="status-dot"></span> A integração com o Supabase está pendente</p></div></aside>
+          <aside class="form-aside"><div class="panel-card publish-card"><p class="eyebrow">Publicação</p><h2>Visibilidade no site</h2><p class="muted">Ao salvar, o anúncio ficará disponível no catálogo público. Imóveis vendidos ou alugados podem continuar visíveis com o status correspondente.</p><p class="publish-status" id="publish-status"><span class="status-dot"></span><span>Verificando conexão…</span></p></div></aside>
         </form>
       </section>
 
       <section class="view-panel" id="view-settings" hidden>
-        <div class="page-heading"><div><p class="eyebrow">Painel</p><h1>Configurações</h1><p class="muted">Finalize a conexão com seu banco de dados e gerencie sua conta.</p></div></div>
+        <div class="page-heading"><div><p class="eyebrow">Painel</p><h1>Configurações</h1><p class="muted">Consulte o estado da conexão e da sessão administrativa.</p></div></div>
         <div class="settings-grid">
-          <section class="panel-card settings-card"><p class="eyebrow">Conexão</p><h2>Supabase</h2><p class="muted">As credenciais ficam no arquivo de configuração do site. A chave pública é destinada ao navegador; nunca coloque chaves secretas no frontend.</p><div class="connection-state" id="connection-state"><span class="connection-dot"></span><span>Configuração pendente</span></div><div class="setup-steps"><h3>Para habilitar o painel</h3><ol><li>Crie um projeto Supabase e copie a Project URL e a chave <strong>anon/public</strong>.</li><li>Preencha <code>SUPABASE_URL</code> e <code>SUPABASE_ANON_KEY</code> em <code>js/supabase-config.js</code>.</li><li>Execute <code>supabase/migrations/202611240001_admin_properties.sql</code> no SQL Editor do Supabase.</li><li>Crie o usuário em <strong>Authentication → Users</strong> no Dashboard do Supabase.</li><li>Copie o UUID desse usuário e adicione-o à tabela <code>public.admin_users</code> pelo SQL Editor (instruções no arquivo da migration).</li><li>Publique o site num servidor HTTPS; o login não funciona abrindo o HTML via <code>file://</code>.</li></ol></div><p class="notice notice--warning">Até concluir esses passos, não há login, dados ou operações simuladas. A área administrativa permanece bloqueada.</p></section>
+          <section class="panel-card settings-card"><p class="eyebrow">Conexão</p><h2>Supabase</h2><p class="muted">O painel valida a conexão, a sessão autenticada e a autorização administrativa antes de liberar operações.</p><div class="connection-state" id="connection-state"><span class="connection-dot"></span><span>Verificando conexão</span></div><p class="muted" id="connection-detail">O estado será atualizado após validar sua sessão.</p><p class="notice notice--warning" id="settings-setup" hidden></p></section>
           <section class="panel-card settings-card"><p class="eyebrow">Perfil da sessão</p><h2>Conta autorizada</h2><p class="muted">O perfil será carregado da sessão autenticada do Supabase.</p><div class="profile-detail"><span>E-mail</span><strong id="settings-email">Não conectado</strong></div><div class="profile-detail"><span>Autorização</span><strong>Administrador Supabase</strong></div></section>
         </div>
       </section>

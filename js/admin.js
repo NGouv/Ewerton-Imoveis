@@ -12,7 +12,13 @@
   const formMessage = document.querySelector("#form-message");
   const imageList = document.querySelector("#image-list");
   const imageInput = document.querySelector("#image-files");
-  const state = { properties: [], editingId: null, images: [], removedImages: [] };
+  const videoList = document.querySelector("#video-list");
+  const videoUrlInput = document.querySelector("#video-url");
+  const videoMessage = document.querySelector("#video-message");
+  const addVideoButton = document.querySelector("#add-video");
+  const cancelVideoEditButton = document.querySelector("#cancel-video-edit");
+  const videoMigrationNotice = document.querySelector("#video-migration-notice");
+  const state = { properties: [], editingId: null, images: [], removedImages: [], videos: [], videosDirty: false, editingVideoId: null, videoSchemaAvailable: null };
   const statusLabels = { available: "Disponível", sold: "Vendido", rented: "Alugado" };
   const purposeLabels = { sale: "Venda", rent: "Aluguel" };
 
@@ -33,6 +39,25 @@
       button.textContent = button.dataset.label || button.textContent;
       button.disabled = false;
     }
+  };
+  const setConnectionState = (status, detail, isConnected) => {
+    const connection = document.querySelector("#connection-state");
+    connection.classList.toggle("is-connected", isConnected);
+    connection.lastElementChild.textContent = status;
+    document.querySelector("#connection-detail").textContent = detail;
+    const publishStatus = document.querySelector("#publish-status");
+    publishStatus.classList.toggle("is-connected", isConnected);
+    publishStatus.lastElementChild.textContent = status;
+    document.querySelector("#pending-banner").hidden = isConnected;
+  };
+  const setVideoAvailability = (available) => {
+    state.videoSchemaAvailable = available;
+    videoMigrationNotice.hidden = available;
+    videoMigrationNotice.textContent = available
+      ? ""
+      : `O cadastro de vídeos ficará disponível após executar a migration ${window.PropertyVideos.migration}. O cadastro de imóveis e fotos continua funcionando.`;
+    videoUrlInput.disabled = !available;
+    addVideoButton.disabled = !available;
   };
   const formatPrice = (value) => new Intl.NumberFormat("pt-BR", {
     style: "currency", currency: "BRL", maximumFractionDigits: 2
@@ -58,9 +83,8 @@
     document.querySelector("#account-email").textContent = email;
     document.querySelector("#account-avatar").textContent = email.slice(0, 2).toUpperCase();
     document.querySelector("#settings-email").textContent = email;
-    document.querySelector("#pending-banner").hidden = true;
-    document.querySelector("#connection-state").classList.add("is-connected");
-    document.querySelector("#connection-state").lastElementChild.textContent = "Conectado e autenticado";
+    document.querySelector("#settings-setup").hidden = true;
+    setConnectionState("Conectado e autenticado", "Sessão autenticada e conta autorizada como administradora.", true);
   };
 
   const renderStats = () => {
@@ -188,7 +212,9 @@
         edit.className = "text-button";
         edit.type = "button";
         edit.textContent = "Editar";
-        edit.addEventListener("click", () => beginEdit(property));
+        edit.addEventListener("click", () => {
+          beginEdit(property).catch((error) => showToast(`Não foi possível carregar os vídeos deste imóvel: ${error.message}`, true));
+        });
         const remove = document.createElement("button");
         remove.className = "text-button text-button--danger";
         remove.type = "button";
@@ -270,6 +296,70 @@
     });
   };
 
+  const displayFormVideos = () => {
+    videoList.replaceChildren();
+    if (!state.videos.length) {
+      const empty = document.createElement("p");
+      empty.className = "muted";
+      empty.textContent = "Nenhum vídeo adicionado.";
+      videoList.append(empty);
+      return;
+    }
+
+    state.videos.forEach((video, index) => {
+      const item = document.createElement("article");
+      item.className = "video-item";
+      const copy = document.createElement("div");
+      copy.className = "video-item-copy";
+      const label = document.createElement("strong");
+      const link = document.createElement("a");
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      try {
+        const parsed = window.PropertyVideos.parse(video.url);
+        label.textContent = parsed.label;
+        link.href = parsed.url;
+        link.textContent = "Abrir vídeo";
+      } catch (error) {
+        label.textContent = "Link inválido";
+        link.textContent = "Remova e adicione um link compatível";
+        link.removeAttribute("href");
+      }
+      const url = document.createElement("small");
+      url.textContent = video.url;
+      copy.append(label, link, url);
+      const actions = document.createElement("div");
+      actions.className = "video-item-actions";
+      const edit = document.createElement("button");
+      edit.className = "text-button";
+      edit.type = "button";
+      edit.textContent = "Editar";
+      edit.setAttribute("aria-label", `Editar vídeo ${index + 1}`);
+      edit.addEventListener("click", () => {
+        state.editingVideoId = video.id;
+        videoUrlInput.value = video.url;
+        videoMessage.textContent = "Atualize o link e salve as alterações.";
+        addVideoButton.textContent = "Salvar alterações";
+        cancelVideoEditButton.hidden = false;
+        videoUrlInput.focus();
+      });
+      const remove = document.createElement("button");
+      remove.className = "text-button text-button--danger";
+      remove.type = "button";
+      remove.textContent = "Remover";
+      remove.setAttribute("aria-label", `Remover vídeo ${index + 1}`);
+      remove.addEventListener("click", () => {
+        if (state.editingVideoId === video.id) cancelVideoEdit();
+        state.videos.splice(index, 1);
+        state.videosDirty = true;
+        displayFormVideos();
+      });
+      actions.append(edit, remove);
+      item.append(copy, actions);
+      videoList.append(item);
+    });
+  };
+
   const resetForm = () => {
     state.images.forEach((image) => {
       if (image.preview) URL.revokeObjectURL(image.preview);
@@ -278,10 +368,17 @@
     state.editingId = null;
     state.images = [];
     state.removedImages = [];
+    state.videos = [];
+    state.videosDirty = false;
+    state.editingVideoId = null;
     formMessage.textContent = "";
+    videoMessage.textContent = "";
+    addVideoButton.textContent = "Adicionar vídeo";
+    cancelVideoEditButton.hidden = true;
     document.querySelector("#form-heading").textContent = "Cadastrar imóvel";
     document.querySelector("#save-property").textContent = "Salvar imóvel";
     displayFormImages();
+    displayFormVideos();
   };
 
   const beginCreate = () => {
@@ -289,7 +386,7 @@
     setView("form");
   };
 
-  const beginEdit = (property) => {
+  const beginEdit = async (property) => {
     resetForm();
     state.editingId = property.id;
     document.querySelector("#form-heading").textContent = "Editar imóvel";
@@ -313,7 +410,11 @@
       .sort((a, b) => a.display_order - b.display_order)
       .map((image) => ({ ...image, is_cover: Boolean(image.is_cover) }));
     if (state.images.length && !state.images.some((image) => image.is_cover)) state.images[0].is_cover = true;
+    if (state.videoSchemaAvailable) {
+      state.videos = await repository.listAdminVideos(property.id);
+    }
     displayFormImages();
+    displayFormVideos();
     setView("form");
   };
 
@@ -394,6 +495,7 @@
         await repository.auth.signOut();
         throw new Error("Esta conta não está autorizada como administradora.");
       }
+      setVideoAvailability(await repository.checkVideoSchema());
       await refresh();
       showApp(user);
       setView("dashboard");
@@ -458,6 +560,47 @@
     imageInput.value = "";
   });
 
+  const addVideo = () => {
+    videoMessage.textContent = "";
+    try {
+      const parsed = window.PropertyVideos.parse(videoUrlInput.value);
+      if (state.videos.some((video) =>
+        video.id !== state.editingVideoId && window.PropertyVideos.parse(video.url).url === parsed.url)) {
+        videoMessage.textContent = "Este vídeo já foi adicionado.";
+        return;
+      }
+      if (state.editingVideoId) {
+        const index = state.videos.findIndex((video) => video.id === state.editingVideoId);
+        if (index < 0) throw new Error("O vídeo selecionado para edição não está mais disponível.");
+        state.videos[index] = { ...state.videos[index], url: parsed.url, platform: parsed.platform };
+        state.editingVideoId = null;
+        addVideoButton.textContent = "Adicionar vídeo";
+        cancelVideoEditButton.hidden = true;
+      } else {
+        state.videos.push({ id: crypto.randomUUID(), url: parsed.url, platform: parsed.platform });
+      }
+      state.videosDirty = true;
+      videoUrlInput.value = "";
+      displayFormVideos();
+    } catch (error) {
+      videoMessage.textContent = error.message;
+    }
+  };
+  const cancelVideoEdit = () => {
+    state.editingVideoId = null;
+    videoUrlInput.value = "";
+    videoMessage.textContent = "";
+    addVideoButton.textContent = "Adicionar vídeo";
+    cancelVideoEditButton.hidden = true;
+  };
+  addVideoButton.addEventListener("click", addVideo);
+  cancelVideoEditButton.addEventListener("click", cancelVideoEdit);
+  videoUrlInput.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    addVideo();
+  });
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     formMessage.textContent = "";
@@ -465,7 +608,7 @@
     const wasEditing = Boolean(state.editingId);
     setBusy(button, true, "Salvando…");
     try {
-      await repository.saveProperty(readForm(), state.images);
+      await repository.saveProperty(readForm(), state.images, state.videosDirty ? state.videos : undefined);
       await refresh();
       resetForm();
       setView("properties");
@@ -481,26 +624,28 @@
     .then(async (configured) => {
       if (!configured) {
         setupNotice.hidden = false;
-        setupNotice.textContent = "Painel bloqueado: configure SUPABASE_URL e SUPABASE_ANON_KEY em js/supabase-config.js. Nenhuma autenticação ou demonstração está sendo simulada.";
-        document.querySelector("#connection-state").lastElementChild.textContent = "Configuração pendente";
+        setupNotice.textContent = "Painel bloqueado: a configuração pública do Supabase não foi encontrada em js/supabase-config.js.";
+        setConnectionState("Configuração pendente", "Não foi possível inicializar o cliente Supabase.", false);
         return;
       }
-      document.querySelector("#connection-state").lastElementChild.textContent = "Credenciais configuradas";
+      setConnectionState("Conexão configurada", "Entre com uma conta autorizada para validar a sessão administrativa.", false);
       const session = await repository.auth.getSession();
-        if (!session?.user) return;
-        const user = await repository.auth.getAuthorizedUser();
-        if (!user) {
-          await repository.auth.signOut();
-          loginMessage.textContent = "A sessão não pertence a uma conta administrativa autorizada.";
-          return;
-        }
-        await refresh();
-        showApp(user);
-        setView("dashboard");
-      })
-      .catch((error) => {
-        setupNotice.hidden = false;
-        setupNotice.textContent = `Não foi possível iniciar a conexão: ${error.message}`;
-        loginMessage.textContent = `Não foi possível validar a sessão: ${error.message}`;
-      });
+      if (!session?.user) return;
+      const user = await repository.auth.getAuthorizedUser();
+      if (!user) {
+        await repository.auth.signOut();
+        loginMessage.textContent = "A sessão não pertence a uma conta administrativa autorizada.";
+        return;
+      }
+      setVideoAvailability(await repository.checkVideoSchema());
+      await refresh();
+      showApp(user);
+      setView("dashboard");
+    })
+    .catch((error) => {
+      setupNotice.hidden = false;
+      setupNotice.textContent = `Não foi possível validar a conexão e a sessão do Supabase: ${error.message}`;
+      loginMessage.textContent = `Não foi possível validar a sessão: ${error.message}`;
+      setConnectionState("Falha na conexão", error.message, false);
+    });
 })();
