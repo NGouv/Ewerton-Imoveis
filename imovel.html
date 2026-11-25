@@ -14,41 +14,61 @@
     <link rel="stylesheet" href="./css/imovel.css">
 </head>
 <body id="top">
-  <header class="site-header">
+  <header class="site-header" id="site-header">
     <div class="container header-inner">
       <a class="brand" href="./index.html#inicio" aria-label="Ewerton Imóveis, página inicial">
         <span class="brand-name">Ewerton Imóveis</span>
         <span class="brand-credential">CRECI 177849-F</span>
       </a>
+      <nav class="primary-nav" id="primary-navigation" aria-label="Navegação principal">
+        <a href="./index.html#inicio">Início</a>
+        <a href="./index.html#imoveis">Imóveis</a>
+        <a href="./index.html#sobre">Sobre</a>
+        <a href="./index.html#contato">Contato</a>
+      </nav>
       <div class="header-actions">
-        <a class="back-link" href="./index.html#imoveis">Voltar aos imóveis</a>
-        <a class="button" id="header-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">
+        <a class="button header-cta" id="header-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
             <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
           </svg>
-          WhatsApp
+          <span>Fale comigo</span>
         </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="primary-navigation">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
 
   <main class="page-main container" id="property-content" hidden>
-    <p class="breadcrumb"><a href="./index.html#inicio">Início</a><span>/</span><a href="./index.html#imoveis">Imóveis</a><span>/</span><strong id="breadcrumb-title"></strong></p>
-    <div class="property-heading">
-      <div>
-        <p class="eyebrow">Detalhes do imóvel</p>
+    <a class="catalog-back" id="catalog-back" href="./index.html#imoveis">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"></path></svg>
+      Voltar aos imóveis
+    </a>
+
+    <section class="property-intro" aria-labelledby="property-title">
+      <div class="property-badges" id="property-badges"></div>
+      <div class="property-heading">
         <h1 class="property-title" id="property-title"></h1>
         <p class="property-location" id="property-location"></p>
-        <p class="property-type" id="property-type"></p>
       </div>
-      <span class="property-code" id="property-code"></span>
-    </div>
+      <div class="property-price-row">
+        <p class="property-price" id="property-price"></p>
+        <div class="property-actions">
+          <button class="icon-action" id="share-property" type="button" aria-label="Compartilhar este imóvel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 10.7 6.8-4.4m-6.8 7 6.8 4.3"></path></svg>
+            <span>Compartilhar</span>
+          </button>
+          <span class="share-feedback" id="share-feedback" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+    </section>
 
-    <div class="detail-layout">
-      <section class="gallery" aria-label="Galeria de fotografias do imóvel">
+    <section class="gallery-section" aria-label="Galeria de fotografias do imóvel">
+      <div class="gallery-bento" id="gallery-bento">
         <div class="main-photo-wrap" id="gallery-swipe">
           <button class="main-photo-button" type="button" id="open-lightbox" aria-label="Ampliar fotografia atual">
-            <img class="main-photo" id="main-photo" src="" alt="">
+            <img class="main-photo" id="main-photo" alt="">
           </button>
           <button class="photo-control photo-control--previous" type="button" id="photo-previous" aria-label="Ver fotografia anterior">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
@@ -60,50 +80,65 @@
           <span class="photo-count" id="photo-count" aria-live="polite"></span>
           <p class="photo-empty" id="photo-empty" hidden>Nenhuma fotografia cadastrada para este imóvel.</p>
         </div>
-        <div class="thumbnail-list" id="thumbnail-list" role="group" aria-label="Selecionar fotografia"></div>
-      </section>
-
-      <aside class="property-summary" aria-label="Resumo do imóvel">
-        <p class="summary-label">Valor anunciado</p>
-        <p class="property-price" id="property-price"></p>
-        <div class="stats-grid" id="property-stats"></div>
-        <a class="button whatsapp-cta" id="property-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-            <path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path>
-          </svg>
-          Consultar pelo WhatsApp
-        </a>
-        <p class="summary-note">CRECI 177849-F · Ewerton Imóveis</p>
-      </aside>
-    </div>
+        <div class="gallery-secondary" id="gallery-previews"></div>
+      </div>
+      <div class="thumbnail-list" id="thumbnail-list" role="group" aria-label="Selecionar fotografia"></div>
+      <button class="gallery-all-mobile" id="view-all-photos" type="button" hidden>Ver todas as fotos</button>
+    </section>
 
     <section class="video-section" id="property-videos-section" aria-labelledby="videos-heading" hidden>
-      <h2 class="section-heading" id="videos-heading">Vídeos do imóvel</h2>
+      <div class="section-heading-row">
+        <p class="eyebrow">Um novo olhar sobre o imóvel</p>
+        <h2 class="section-heading" id="videos-heading">Conheça este imóvel em vídeo</h2>
+      </div>
       <div class="property-videos" id="property-videos"></div>
       <p class="video-message" id="video-message" role="status" hidden></p>
     </section>
 
-    <div class="detail-sections">
-      <div>
-        <section class="detail-section" aria-labelledby="description-heading">
-          <h2 class="section-heading" id="description-heading">Sobre este imóvel</h2>
+    <section class="quick-facts-section" aria-label="Destaques do imóvel">
+      <div class="quick-facts" id="property-stats"></div>
+    </section>
+
+    <div class="property-content-layout">
+      <div class="property-details-column">
+        <section class="detail-section description-section" aria-labelledby="description-heading">
+          <p class="eyebrow">Um lugar para viver bem</p>
+          <h2 class="section-heading" id="description-heading">Um espaço para chamar de seu</h2>
           <p class="description" id="property-description"></p>
+          <ul class="highlight-list" id="property-highlights" hidden></ul>
         </section>
-        <section class="detail-section detail-section--features" aria-labelledby="features-heading">
+        <section class="detail-section info-section" id="info-section" aria-labelledby="info-heading">
+          <p class="eyebrow">Informações do imóvel</p>
+          <h2 class="section-heading" id="info-heading">Detalhes importantes</h2>
+          <dl class="property-info-grid" id="property-info"></dl>
+        </section>
+        <section class="detail-section detail-section--features" aria-labelledby="features-heading" id="features-section" hidden>
+          <p class="eyebrow">Para conhecer melhor</p>
           <h2 class="section-heading" id="features-heading">Características e diferenciais</h2>
           <ul class="feature-list" id="property-features"></ul>
         </section>
-        <section class="detail-section" id="property-costs-section" aria-labelledby="costs-heading" hidden>
-          <h2 class="section-heading" id="costs-heading">Condomínio e IPTU</h2>
-          <ul class="feature-list" id="property-costs"></ul>
-        </section>
       </div>
+
+      <aside class="realtor-card" aria-label="Contato com a Ewerton Imóveis">
+        <img class="realtor-avatar" src="./assets/sobre.png" alt="Corretor da Ewerton Imóveis" loading="lazy" width="112" height="112">
+        <p class="eyebrow">Atendimento personalizado</p>
+        <h2 class="realtor-name">Ewerton Imóveis</h2>
+        <p class="realtor-role">Consultor imobiliário · CRECI 177849-F</p>
+        <p class="realtor-message">Estou à disposição para tirar suas dúvidas e ajudar você a conhecer este imóvel.</p>
+        <a class="button contact-primary" id="property-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path></svg>
+          Falar no WhatsApp
+        </a>
+        <a class="button contact-secondary" id="schedule-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">Agendar visita</a>
+        <a class="realtor-phone" href="tel:+5519995188676">(19) 99518-8676</a>
+      </aside>
     </div>
   </main>
 
   <main class="container unavailable" id="not-found" hidden>
     <p class="eyebrow">Imóvel não encontrado</p>
     <h1>Não foi possível localizar este imóvel.</h1>
+    <p class="load-error" id="load-error" hidden></p>
     <a class="button" href="./index.html#imoveis">Voltar ao catálogo</a>
   </main>
 
@@ -140,6 +175,14 @@
     </div>
   </footer>
 
+  <div class="mobile-contact-bar" id="mobile-contact-bar" hidden>
+    <a class="button contact-primary" id="mobile-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
+    <a class="button contact-secondary" id="mobile-schedule" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer">Agendar visita</a>
+  </div>
+  <a class="floating-whatsapp" id="floating-whatsapp" href="https://wa.me/5519995188676" target="_blank" rel="noopener noreferrer" aria-label="Falar com Ewerton Imóveis pelo WhatsApp">
+    <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"></path></svg>
+  </a>
+
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualização ampliada das fotografias" hidden>
     <div class="lightbox-top">
       <span id="lightbox-count"></span>
@@ -151,7 +194,7 @@
       <button class="photo-control photo-control--previous" type="button" id="lightbox-previous" aria-label="Ver fotografia anterior">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
       </button>
-      <img class="lightbox-image" id="lightbox-image" src="" alt="">
+      <img class="lightbox-image" id="lightbox-image" alt="">
       <button class="photo-control photo-control--next" type="button" id="lightbox-next" aria-label="Ver próxima fotografia">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
       </button>
