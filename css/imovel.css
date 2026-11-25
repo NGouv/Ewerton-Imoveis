@@ -6,6 +6,8 @@
   --gold-pale: #f5eddd;
   --green: #18764b;
   --green-hover: #12623d;
+  --brand-gold: #E6A817;
+  --brand-gold-hover: #F0C65A;
   --paper: #fbfaf7;
   --white: #fff;
   --ink: #252a30;
@@ -121,14 +123,6 @@ a {
   font-weight: 600;
 }
 
-.brand-credential {
-  margin-top: 4px;
-  color: #e8c980;
-  font-size: .63rem;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-}
-
 .primary-nav {
   display: flex;
   align-items: center;
@@ -185,13 +179,17 @@ a {
 .header-cta {
   min-height: 43px;
   padding: 9px 14px;
-  background: var(--green);
-  color: var(--white);
+  background: var(--brand-gold);
+  color: #141414;
 }
 
 .header-cta:hover,
 .contact-primary:hover {
-  background: var(--green-hover);
+  background: var(--brand-gold-hover);
+}
+
+.site-header .header-cta:focus-visible {
+  outline-color: var(--white);
 }
 
 .nav-toggle {
@@ -628,23 +626,27 @@ a {
 
 .property-videos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 380px));
+  max-width: 56rem;
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
-  gap: 18px;
+  gap: 22px;
+  margin-inline: auto;
 }
 
 .property-video-card {
   min-width: 0;
   overflow: hidden;
-  padding: 14px;
-  border: 1px solid var(--line);
-  background: var(--white);
+  border-radius: 1rem;
+  background: #111;
+  box-shadow: 0 16px 38px rgba(20, 43, 73, .16);
 }
 
 .property-video-card h3 {
-  margin: 0 0 11px;
+  margin: 0;
+  padding: 14px 18px;
+  background: var(--white);
   color: var(--navy);
-  font-size: .78rem;
+  font-size: .82rem;
   font-weight: 600;
 }
 
@@ -656,17 +658,11 @@ a {
   background: #111;
 }
 
-.property-video-card[data-platform="instagram"] iframe,
-.property-video-card[data-platform="tiktok"] iframe {
-  width: min(100%, 360px);
-  aspect-ratio: 9 / 16;
-  margin-inline: auto;
-}
-
 .property-video-card video {
   display: block;
   width: 100%;
-  max-height: 680px;
+  height: auto;
+  aspect-ratio: 16 / 9;
   background: #111;
   object-fit: contain;
 }
@@ -863,16 +859,6 @@ a {
   text-align: center;
 }
 
-.realtor-avatar {
-  width: 90px;
-  height: 90px;
-  margin-bottom: 18px;
-  border: 2px solid var(--gold-pale);
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: 22% center;
-}
-
 .realtor-card .eyebrow {
   margin-bottom: 5px;
 }
@@ -901,22 +887,32 @@ a {
 .contact-primary {
   width: 100%;
   min-height: 50px;
-  background: var(--green);
-  color: var(--white);
+  background: var(--brand-gold);
+  color: #141414;
+}
+
+.contact-primary:focus-visible,
+.floating-whatsapp:focus-visible {
+  outline-color: var(--navy);
 }
 
 .contact-secondary {
   width: 100%;
   min-height: 46px;
   margin-top: 9px;
-  border-color: rgba(20, 43, 73, .28);
-  background: var(--white);
-  color: var(--navy);
+  border-color: var(--brand-gold);
+  background: var(--brand-gold);
+  color: #141414;
 }
 
 .contact-secondary:hover {
-  border-color: var(--navy);
-  background: #f7f8f8;
+  border-color: var(--brand-gold-hover);
+  background: var(--brand-gold-hover);
+}
+
+.contact-secondary:focus-visible,
+.icon-action:focus-visible {
+  outline-color: var(--navy);
 }
 
 .realtor-phone {
@@ -940,14 +936,14 @@ a {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, .7);
   border-radius: 50%;
-  background: var(--green);
-  color: var(--white);
+  background: var(--brand-gold);
+  color: #141414;
   box-shadow: 0 5px 18px rgba(10, 52, 33, .2);
   transition: background-color var(--transition), transform var(--transition);
 }
 
 .floating-whatsapp:hover {
-  background: var(--green-hover);
+  background: var(--brand-gold-hover);
   transform: translateY(-2px);
 }
 
@@ -1040,7 +1036,7 @@ a {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   padding: 16px;
-  background: rgba(13, 27, 44, .97);
+  background: rgba(0, 0, 0, .88);
   backdrop-filter: blur(8px);
 }
 
@@ -1080,9 +1076,12 @@ a {
 }
 
 .lightbox-image {
-  max-width: min(100%, 1500px);
-  max-height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 85vh;
   object-fit: contain;
+  object-position: center;
 }
 
 .lightbox .photo-control {
@@ -1101,6 +1100,17 @@ a {
 .unavailable {
   min-height: 50vh;
   padding-block: 90px;
+  text-align: center;
+}
+
+.property-loading {
+  display: grid;
+  min-height: 50vh;
+  place-items: center;
+  margin-block: 0;
+  padding-block: 60px;
+  color: var(--muted);
+  font-size: .86rem;
   text-align: center;
 }
 
@@ -1394,10 +1404,6 @@ a {
 
   .brand-name {
     font-size: 1.06rem;
-  }
-
-  .brand-credential {
-    font-size: .58rem;
   }
 
   .header-actions {

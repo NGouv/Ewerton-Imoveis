@@ -17,6 +17,39 @@
   const formatPrice = (price) => new Intl.NumberFormat("pt-BR", {
     style: "currency", currency: "BRL", maximumFractionDigits: 2
   }).format(Number(price) || 0);
+  const featureIcons = {
+    type: ["M3 10.5 12 3l9 7.5", "M5 9v11h14V9", "M9 20v-6h6v6"],
+    bedrooms: ["M3 21V8m0 8h18v5M5 16v-3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3m0 0v-2a2 2 0 0 1 2-2h3a3 3 0 0 1 3 3v1M21 21V10"],
+    area: ["M4 4h16v16H4z", "M8 8h.01M16 8h.01M8 16h.01M16 16h.01"],
+    bathrooms: ["M4 11h16", "M5 11v4a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-4", "M7 11V6a2 2 0 0 1 4 0v2"],
+    parking: ["M7 20V4h6a5 5 0 0 1 0 10H7"]
+  };
+  const makeIcon = (paths) => {
+    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    icon.setAttribute("viewBox", "0 0 24 24");
+    icon.setAttribute("fill", "none");
+    icon.setAttribute("stroke", "currentColor");
+    icon.setAttribute("stroke-width", "1.6");
+    icon.setAttribute("stroke-linecap", "round");
+    icon.setAttribute("stroke-linejoin", "round");
+    icon.setAttribute("aria-hidden", "true");
+    paths.forEach((pathData) => {
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", pathData);
+      icon.append(path);
+    });
+    return icon;
+  };
+  const createWhatsAppIcon = () => {
+    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    icon.setAttribute("viewBox", "0 0 32 32");
+    icon.setAttribute("fill", "currentColor");
+    icon.setAttribute("aria-hidden", "true");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M16.04 3C8.88 3 3.06 8.82 3.06 15.98c0 2.3.6 4.53 1.74 6.5L3 29l6.69-1.75a12.93 12.93 0 0 0 6.34 1.65h.01c7.16 0 12.98-5.82 12.98-12.98A12.91 12.91 0 0 0 16.04 3Zm0 23.7h-.01c-1.94 0-3.84-.52-5.5-1.51l-.39-.23-3.97 1.04 1.06-3.87-.25-.4a10.7 10.7 0 1 1 9.06 4.97Zm5.88-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.22.33-.83 1.05-1.02 1.27-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.6-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.33-.02-.5.14-.66.15-.14.32-.38.49-.57.16-.19.21-.33.32-.55.1-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.68s1.16 3.1 1.32 3.31c.16.22 2.28 3.48 5.52 4.88.77.33 1.37.53 1.84.68.77.25 1.47.21 2.02.13.62-.1 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z");
+    icon.append(path);
+    return icon;
+  };
   const addOption = (select, value, label) => {
     if (!value || [...select.options].some((option) => normalize(option.value) === normalize(value))) return;
     const option = document.createElement("option");
@@ -37,7 +70,6 @@
     card.dataset.city = property.city || "";
     card.dataset.type = property.property_type;
     card.dataset.price = priceBand(property.price);
-    card.dataset.status = property.status;
     card.setAttribute("aria-label", `Ver detalhes: ${property.title}`);
 
     const imageWrap = document.createElement("div");
@@ -58,10 +90,12 @@
     const cityTag = document.createElement("span");
     cityTag.className = "city-tag";
     cityTag.textContent = location;
-    const listingTag = document.createElement("span");
-    listingTag.className = "catalog-tag";
-    listingTag.textContent = "Publicado";
-    imageWrap.append(cityTag, listingTag);
+    imageWrap.append(cityTag);
+    const purposeLabels = { sale: "Venda", rent: "Locação" };
+    const purposeTag = document.createElement("span");
+    purposeTag.className = "purpose-tag";
+    purposeTag.textContent = purposeLabels[property.purpose] || "";
+    if (purposeTag.textContent) imageWrap.append(purposeTag);
 
     const content = document.createElement("div");
     content.className = "property-content";
@@ -73,15 +107,27 @@
     price.textContent = formatPrice(property.price);
     const details = document.createElement("ul");
     details.className = "property-features";
+    const numberFormat = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 });
     [
-      `${property.property_type} · ${property.purpose === "rent" ? "Aluguel" : "Venda"}`,
-      `${property.private_area ?? property.total_area ?? "Área não informada"}${property.private_area || property.total_area ? " m²" : ""} · ${property.bedrooms ?? "Quartos não informados"} quartos`,
-      statusLabel(property.status)
-    ].forEach((value) => {
-      const item = document.createElement("li");
-      item.textContent = value;
-      details.append(item);
-    });
+      { value: property.property_type, label: "", icon: "type" },
+      { value: property.bedrooms, label: "Quartos", icon: "bedrooms" },
+      { value: property.private_area ?? property.total_area, label: "m²", icon: "area" },
+      { value: property.bathrooms, label: "Banheiros", icon: "bathrooms" },
+      { value: property.parking_spaces, label: "Vagas", icon: "parking" }
+    ].filter((feature) => feature.value !== null && feature.value !== undefined && feature.value !== "")
+      .forEach((feature) => {
+        const item = document.createElement("li");
+        item.className = "property-feature";
+        item.append(makeIcon(featureIcons[feature.icon]));
+        const value = Number(feature.value);
+        const text = document.createElement("span");
+        text.className = "property-feature-text";
+        const formattedValue = Number.isFinite(value) ? numberFormat.format(value) : feature.value;
+        text.textContent = feature.label ? `${formattedValue} ${feature.label}` : formattedValue;
+        item.append(text);
+        details.append(item);
+      });
+    details.hidden = details.childElementCount === 0;
     const actions = document.createElement("div");
     actions.className = "property-actions";
     const detailLink = document.createElement("a");
@@ -90,20 +136,16 @@
     detailLink.textContent = "Ver imóvel";
     const whatsapp = document.createElement("a");
     whatsapp.className = "button property-button";
+    whatsapp.setAttribute("aria-label", `Conversar no WhatsApp sobre ${property.title}`);
     whatsapp.href = `https://wa.me/5519995188676?text=${encodeURIComponent(`Olá! Tenho interesse no imóvel: ${property.title}.`)}`;
     whatsapp.target = "_blank";
     whatsapp.rel = "noopener noreferrer";
-    whatsapp.textContent = "Tenho interesse";
+    whatsapp.append(createWhatsAppIcon(), document.createTextNode("WhatsApp"));
     actions.append(detailLink, whatsapp);
     content.append(title, price, details, actions);
     card.append(imageWrap, content);
     return card;
   };
-  const statusLabel = (status) => ({
-    available: "Disponível",
-    sold: "Vendido",
-    rented: "Alugado"
-  }[status] || "Status não informado");
 
   const appendCatalog = async () => {
     try {

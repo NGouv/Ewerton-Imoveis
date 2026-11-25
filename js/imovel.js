@@ -1,5 +1,6 @@
 (() => {
   const repository = window.PropertyRepository;
+  const loading = document.querySelector("#property-loading");
   const content = document.querySelector("#property-content");
   const notFound = document.querySelector("#not-found");
   const money = new Intl.NumberFormat("pt-BR", {
@@ -590,6 +591,7 @@
     const heading = notFound.querySelector("h1");
     eyebrow.textContent = "Detalhes indisponíveis";
     heading.textContent = "Não foi possível abrir este imóvel.";
+    loading.hidden = true;
     content.hidden = true;
     document.querySelector("#mobile-contact-bar").hidden = true;
     document.body.classList.remove("has-mobile-contact");
@@ -647,6 +649,7 @@
       renderFeatures(property);
       renderGallery(property);
       setContactLinks(property);
+      loading.hidden = true;
       content.hidden = false;
       content.classList.add("is-loaded");
       document.querySelector("#mobile-contact-bar").hidden = false;

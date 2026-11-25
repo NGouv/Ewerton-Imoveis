@@ -568,7 +568,8 @@
 
     .property-image-wrap {
       position: relative;
-      height: 240px;
+      width: 100%;
+      aspect-ratio: 4 / 3;
       overflow: hidden;
       background: var(--color-off-white);
     }
@@ -585,6 +586,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       transition: transform 500ms ease;
     }
 
@@ -604,6 +606,8 @@
       position: absolute;
       bottom: 15px;
       left: 16px;
+      max-width: calc(100% - 116px);
+      overflow: hidden;
       padding: 7px 10px;
       border: 1px solid rgba(245, 243, 238, .35);
       border-radius: 2px;
@@ -613,10 +617,12 @@
       font-weight: 600;
       letter-spacing: .08em;
       text-transform: uppercase;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       backdrop-filter: blur(8px);
     }
 
-    .catalog-tag {
+    .purpose-tag {
       position: absolute;
       top: 14px;
       right: 14px;
@@ -654,69 +660,94 @@
     }
 
     .property-features {
-      display: grid;
-      gap: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 18px;
       margin: 0 0 22px;
       padding: 0;
       color: var(--color-graphite);
-      font-size: .875rem;
+      font-size: .76rem;
       line-height: 1.55;
       list-style: none;
     }
 
-    .property-features li {
-      position: relative;
-      padding-left: 15px;
+    .property-feature {
+      display: inline-flex;
+      min-width: 0;
+      align-items: center;
+      gap: 6px;
     }
 
-    .property-features li::before {
-      position: absolute;
-      top: .65em;
-      left: 0;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--color-champagne);
-      content: "";
+    .property-feature svg {
+      width: 17px;
+      height: 17px;
+      flex: 0 0 auto;
+      color: var(--color-navy);
+    }
+
+    .property-feature-text {
+      overflow-wrap: anywhere;
     }
 
     .property-button {
-      width: 100%;
-      min-height: 46px;
-      padding: 11px 16px;
-      border-color: rgba(184, 149, 91, .6);
-      background: transparent;
-      color: var(--color-navy);
-      font-size: .76rem;
+      min-height: 44px;
+      flex: 0 0 auto;
+      gap: 7px;
+      padding: 9px 12px;
+      border-color: var(--color-champagne);
+      background: var(--color-champagne);
+      color: #141414;
+      font-size: .7rem;
     }
 
     .property-button:hover {
-      background: rgba(230, 168, 23, .12);
+      border-color: var(--color-champagne-light);
+      background: var(--color-champagne-light);
+      color: #141414;
+    }
+
+    .property-button svg {
+      width: 17px;
+      height: 17px;
     }
 
     .property-actions {
-      display: grid;
-      gap: 9px;
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
       margin-top: auto;
       padding-top: 20px;
     }
 
     .property-actions .button {
-      width: 100%;
+      width: auto;
       min-height: 44px;
     }
 
     .details-button {
-      border-color: rgba(20, 43, 73, .18);
-      background: #FFFFFF;
-      color: var(--color-navy);
+      min-width: 0;
+      flex: 1 1 auto;
+      border-color: var(--color-champagne);
+      background: var(--color-champagne);
+      color: #141414;
       font-size: .76rem;
     }
 
     .details-button:hover {
-      border-color: var(--color-champagne);
-      background: rgba(184, 149, 91, .1);
-      color: var(--color-champagne-light);
+      border-color: var(--color-champagne-light);
+      background: var(--color-champagne-light);
+      color: #141414;
+    }
+
+    .button--gold:focus-visible,
+    .property-actions .button:focus-visible,
+    .floating-whatsapp:focus-visible {
+      outline-color: var(--color-navy);
+    }
+
+    .site-header .header-cta:focus-visible {
+      outline-color: #FFFFFF;
     }
 
     .whatsapp-icon {
@@ -1308,10 +1339,6 @@
     }
 
     @media (min-width: 1100px) {
-      .property-image-wrap {
-        height: 255px;
-      }
-
       .property-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
