@@ -442,7 +442,7 @@
       button.append(image);
       button.addEventListener("click", () => {
         showPhoto(index);
-        if (window.matchMedia("(max-width: 768px)").matches) openLightbox();
+        openLightbox();
       });
       thumbnailList.append(button);
       return button;

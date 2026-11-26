@@ -1592,17 +1592,16 @@
 
       .objective-chips {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
         align-items: center;
       }
 
-      .objective-chip:nth-child(-n+3) {
-        justify-self: start;
-      }
-
-      .objective-chip:last-child {
-        grid-column: 2;
-        justify-self: center;
+      .objective-chip {
+        width: 100%;
+        min-width: 0;
+        justify-self: stretch;
+        padding-inline: 10px;
       }
 
       .contact-action p {
