@@ -281,7 +281,6 @@
     const nextButton = document.querySelector("#photo-next");
     const previewContainer = document.querySelector("#gallery-previews");
     const thumbnailList = document.querySelector("#thumbnail-list");
-    const viewAllButton = document.querySelector("#view-all-photos");
     const lightbox = document.querySelector("#lightbox");
     const lightboxImage = document.querySelector("#lightbox-image");
     const lightboxCount = document.querySelector("#lightbox-count");
@@ -374,7 +373,6 @@
       nextButton.hidden = true;
       previewContainer.hidden = true;
       thumbnailList.hidden = true;
-      viewAllButton.hidden = true;
       return;
     }
 
@@ -384,7 +382,8 @@
     mainPhotoButton.hidden = false;
     previousButton.hidden = photos.length < 2;
     nextButton.hidden = photos.length < 2;
-    thumbnailList.hidden = photos.length < 2;
+    thumbnailList.hidden = false;
+    thumbnailList.dataset.count = String(photos.length);
     previewContainer.replaceChildren();
     thumbnailList.replaceChildren();
 
@@ -422,16 +421,17 @@
       previewContainer.append(preview);
     });
     previewContainer.hidden = previews.length === 0;
-    viewAllButton.hidden = photos.length < 2;
-    viewAllButton.textContent = `Ver todas as ${photos.length} fotos`;
-    viewAllButton.addEventListener("click", openLightbox);
-
     thumbnailButtons = photos.map((photo, index) => {
       const button = document.createElement("button");
       button.className = "thumbnail-button";
       button.type = "button";
       button.setAttribute("aria-label", `Mostrar fotografia ${index + 1}`);
       button.setAttribute("aria-pressed", "false");
+      if (index === photos.length - 1 && photos.length > 1) {
+        button.classList.add("thumbnail-button--view-all");
+        button.dataset.viewAllLabel = `Ver todas as fotos (${photos.length})`;
+        button.setAttribute("aria-label", `Ver todas as fotos (${photos.length})`);
+      }
       const image = document.createElement("img");
       image.src = imageUrl(photo);
       image.alt = "";
@@ -440,7 +440,10 @@
         button.hidden = true;
       }, { once: true });
       button.append(image);
-      button.addEventListener("click", () => showPhoto(index));
+      button.addEventListener("click", () => {
+        showPhoto(index);
+        if (window.matchMedia("(max-width: 768px)").matches) openLightbox();
+      });
       thumbnailList.append(button);
       return button;
     });

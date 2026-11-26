@@ -1423,6 +1423,11 @@
         width: 100%;
       }
 
+      .hero {
+        align-items: flex-start;
+        overflow: visible;
+      }
+
       .hero-picture {
         z-index: -2;
       }
@@ -1436,11 +1441,47 @@
       }
 
       .quick-search {
-        grid-template-columns: 1fr;
+        position: absolute;
+        z-index: 1;
+        top: 100%;
+        left: 50%;
+        grid-template-columns: minmax(0, 1fr) minmax(0, .85fr) minmax(0, 1.3fr) auto;
+        gap: 6px;
+        width: calc(100% - 48px);
+        height: 82px;
+        margin-top: 18px;
+        padding: 8px;
+        transform: translateX(-50%);
+      }
+
+      .quick-search label {
+        min-width: 0;
+        gap: 3px;
+        font-size: .62rem;
+      }
+
+      .quick-search label span {
+        white-space: nowrap;
+      }
+
+      .quick-search select {
+        min-width: 0;
+        min-height: 44px;
+        padding-inline: 5px;
+        font-size: .68rem;
       }
 
       .quick-search-button {
-        width: 100%;
+        width: auto;
+        min-width: 56px;
+        min-height: 44px;
+        padding: 8px;
+        font-size: .68rem;
+        white-space: nowrap;
+      }
+
+      #imoveis {
+        margin-top: 118px;
       }
 
       #sobre {
@@ -1481,6 +1522,10 @@
       #sobre .about-copy p {
         font-size: 15px;
         line-height: 1.55;
+      }
+
+      #sobre .about-copy > p:not(.eyebrow) {
+        color: var(--color-gold);
       }
 
       #diferenciais,
@@ -1545,6 +1590,21 @@
         align-items: center;
       }
 
+      .objective-chips {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: center;
+      }
+
+      .objective-chip:nth-child(-n+3) {
+        justify-self: start;
+      }
+
+      .objective-chip:last-child {
+        grid-column: 2;
+        justify-self: center;
+      }
+
       .contact-action p {
         margin-inline: auto;
       }
@@ -1573,6 +1633,12 @@
       .contact-action .button {
         width: 100%;
         max-width: none;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .quick-search {
+        width: calc(100% - 36px);
       }
     }
 
