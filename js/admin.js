@@ -72,8 +72,13 @@
     navItems.forEach((item) => item.classList.toggle("is-active", item.dataset.view === name));
     const titles = { dashboard: "Visão geral", properties: "Imóveis", form: state.editingId ? "Editar imóvel" : "Cadastrar imóvel", settings: "Configurações" };
     document.querySelector("#page-title").textContent = titles[name] || "Painel";
-    document.querySelector("#sidebar").classList.remove("is-open");
+    setSidebarOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const setSidebarOpen = (isOpen) => {
+    document.querySelector("#sidebar").classList.toggle("is-open", isOpen);
+    document.querySelector("#mobile-menu").setAttribute("aria-expanded", String(isOpen));
   };
 
   const showApp = (user) => {
@@ -192,15 +197,20 @@
         copy.append(title, location);
         details.append(copy);
         const purposeCell = document.createElement("td");
+        purposeCell.dataset.label = "Finalidade";
         purposeCell.textContent = purposeLabels[property.purpose] || "—";
         const priceCell = document.createElement("td");
+        priceCell.dataset.label = "Preço";
         priceCell.className = "price-cell";
         priceCell.textContent = formatPrice(property.price);
         const statusCell = document.createElement("td");
+        statusCell.dataset.label = "Status";
         statusCell.append(createStatus(property.status));
         const dateCell = document.createElement("td");
+        dateCell.dataset.label = "Cadastro";
         dateCell.textContent = formatDate(property.created_at);
         const actions = document.createElement("td");
+        actions.dataset.label = "Ações";
         actions.className = "table-actions";
         const view = document.createElement("a");
         view.className = "text-button";
@@ -532,7 +542,15 @@
     resetForm();
     setView("properties");
   }));
-  document.querySelector("#mobile-menu").addEventListener("click", () => document.querySelector("#sidebar").classList.toggle("is-open"));
+  document.querySelector("#mobile-menu").addEventListener("click", () => {
+    const sidebar = document.querySelector("#sidebar");
+    setSidebarOpen(!sidebar.classList.contains("is-open"));
+  });
+  document.querySelector("#sidebar-close").addEventListener("click", () => setSidebarOpen(false));
+  document.querySelector("#sidebar-overlay").addEventListener("click", () => setSidebarOpen(false));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setSidebarOpen(false);
+  });
   ["property-search", "filter-type", "filter-purpose", "filter-status"].forEach((id) => {
     document.querySelector(`#${id}`).addEventListener(id === "property-search" ? "input" : "change", renderTable);
   });
